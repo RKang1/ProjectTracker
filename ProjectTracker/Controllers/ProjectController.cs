@@ -14,5 +14,10 @@ namespace ProjectTracker.Controllers
         {
             return PartialView("~/Views/Project/Partials/AddProjectPartial.cshtml", new AddProjectViewModel());
         }
+
+        public void AddProject(AddProjectViewModel newProject)
+        {
+
+        }
     }
 }
