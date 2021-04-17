@@ -1,0 +1,17 @@
+﻿@using ProjectTracker.Models.Project.ViewModels;
+
+@model AddProjectViewModel;
+
+<div id="addProjectForm">
+    <label for="name">Name:</label>
+    @Html.TextBoxFor(m => m.Name, new { id = "name" })
+
+    <label for="status">Status:</label>
+    @Html.TextBoxFor(m => m.Status, new { id = "status" })
+
+    <label for="stage">Stage:</label>
+    @Html.TextBoxFor(m => m.Stage, new { id = "stage" })
+
+    <label for="comments">Comments:</label>
+    @Html.TextBoxFor(m => m.Comments, new { id = "comments" })
+</div>
