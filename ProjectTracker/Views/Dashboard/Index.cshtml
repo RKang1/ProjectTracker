@@ -1,4 +1,9 @@
-﻿<h1>Dashboard</h1>
+﻿@using ProjectTracker.Models.Dashboard;
+@using ProjectTracker.Models.Project;
+
+@model DashboardViewModel;
+
+<h1>Dashboard</h1>
 <table class="table table-dark table-striped table-bordered table-hover">
     <thead>
         <tr>
@@ -10,11 +15,14 @@
     </thead>
 
     <tbody>
-        <tr>
-            <td scope="row">University of North Florida</td>
-            <td>Needs Work</td>
-            <td>Alpha</td>
-            <td>Got a lot to do</td>
-        </tr>
+        @foreach (ProjectModel project in Model.Projects)
+        {
+            <tr>
+                <td scope="row">@project.Name</td>
+                <td>@project.Status</td>
+                <td>@project.Stage</td>
+                <td>@project.Comments</td>
+            </tr>
+        }
     </tbody>
 </table>

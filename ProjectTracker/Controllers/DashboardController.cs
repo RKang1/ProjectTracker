@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjectTracker.Models.Dashboard;
+using ProjectTracker.Models.Project;
+using System.Collections.Generic;
 
 namespace ProjectTracker.Controllers
 {
@@ -8,7 +11,22 @@ namespace ProjectTracker.Controllers
         {
             ViewData["Title"] = "Project Tracker";
 
-            return View();
+            DashboardViewModel model = new();
+
+            List<ProjectModel> projects = new()
+            {
+                new ProjectModel()
+                {
+                    Name = "Project Test",
+                    Status = "Needs Work",
+                    Stage = "Alpha",
+                    Comments = "Reading works!"
+                }
+            };
+
+            model.Projects = projects;
+
+            return View(model);
         }
     }
 }
