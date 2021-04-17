@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProjectTracker.Models.Dashboard;
-using ProjectTracker.Models.Project;
+using ProjectTracker.Models.Dashboard.ViewModels;
+using ProjectTracker.Models.Project.Models;
 using System.Collections.Generic;
 
 namespace ProjectTracker.Controllers

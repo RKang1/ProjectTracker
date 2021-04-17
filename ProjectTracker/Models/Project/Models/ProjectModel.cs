@@ -1,4 +1,4 @@
-﻿namespace ProjectTracker.Models.Project
+﻿namespace ProjectTracker.Models.Project.Models
 {
     public class ProjectModel
     {
