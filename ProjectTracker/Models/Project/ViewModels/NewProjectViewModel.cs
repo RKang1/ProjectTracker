@@ -1,6 +1,6 @@
 ﻿namespace ProjectTracker.Models.Project.ViewModels
 {
-    public class AddProjectViewModel
+    public class NewProjectViewModel
     {
         public string Name { get; set; }
 
