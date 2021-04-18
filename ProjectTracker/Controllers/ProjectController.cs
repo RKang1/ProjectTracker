@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjectTracker.DAOs;
 using ProjectTracker.Models.Project.ViewModels;
 
 namespace ProjectTracker.Controllers
@@ -10,14 +11,15 @@ namespace ProjectTracker.Controllers
             return View();
         }
 
-        public IActionResult NewProjectPartial()
+        public IActionResult NewProject()
         {
             return PartialView("~/Views/Project/Partials/NewProjectPartial.cshtml", new NewProjectViewModel());
         }
 
         public void AddProject(NewProjectViewModel newProject)
         {
-
+            ProjectDAO dao = new();
+            dao.AddProject(newProject);
         }
     }
 }
