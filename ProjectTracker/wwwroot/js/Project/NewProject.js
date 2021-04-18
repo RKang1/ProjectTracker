@@ -1,11 +1,11 @@
-﻿document.querySelector('#displayNewProjectPartialBtn').addEventListener('click', (e) => {
-    $('#projectPartial').load('/Project/NewProjectPartial', function () {
+﻿document.querySelector('#addProjectBtn').addEventListener('click', (e) => {
+    $('#projectPartial').load('/Project/NewProject', function () {
         addFormSubmitEvent()
     });
 });
 
 function addFormSubmitEvent() {
-    $('#addProjectBtn').click(function () {
+    $('#createProjectBtn').click(function () {
 
         var dataToSend = $('#newProjectForm :input').serialize();
 
