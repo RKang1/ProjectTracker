@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Projects] (
-	[Id] INT NOT NULL PRIMARY KEY,
+	[Id] INT IDENTITY (1, 1) NOT NULL PRIMARY KEY,
     [Name] NVARCHAR (100) NULL, 
     [Status] INT NULL, 
     [Stage] INT NULL, 
