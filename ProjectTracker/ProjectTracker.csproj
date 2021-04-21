@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\js\Dashboard\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
