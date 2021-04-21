@@ -1,6 +1,6 @@
 ﻿@using ProjectTracker.Models.Project.ViewModels;
 
-@model NewProjectViewModel;
+@model ProjectViewModel;
 
 <div id="newProjectForm">
     <label for="name">Name:</label>
@@ -16,4 +16,4 @@
     @Html.TextBoxFor(m => m.Comments, new { id = "comments" })
 </div>
 
-<button type="button" class="btn btn-primary" id="createProjectBtn">Add Project</button>
+<button type="button" class="btn btn-primary" id="submitProjectBtn" mode="@Model.Mode">Submit</button>

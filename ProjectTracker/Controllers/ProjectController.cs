@@ -21,13 +21,20 @@ namespace ProjectTracker.Controllers
 
         public IActionResult NewProject()
         {
-            return PartialView("~/Views/Project/Partials/NewProjectPartial.cshtml", new NewProjectViewModel());
+            return PartialView("~/Views/Project/Partials/ProjectPartial.cshtml", new ProjectViewModel() { Mode = "add" });
         }
 
-        public void AddProject(NewProjectViewModel newProject)
+        public void AddProject(ProjectViewModel newProject)
         {
             ProjectDAO dao = new(_configuration);
             dao.AddProject(newProject);
         }
+
+        public void EditProject(ProjectViewModel editProject)
+        {
+            ProjectDAO dao = new(_configuration);
+            dao.AddProject(editProject);
+        }
+
     }
 }

@@ -40,6 +40,7 @@ namespace ProjectTracker.DAOs
                     {
                         ProjectModel temp = new ProjectModel()
                         {
+                            Id = (int)dataReader[nameof(ProjectModel.Id)],
                             Name = (string)dataReader[nameof(ProjectModel.Name)],
                             Status = (int)dataReader[nameof(ProjectModel.Status)],
                             Stage = (int)dataReader[nameof(ProjectModel.Stage)],
@@ -58,7 +59,7 @@ namespace ProjectTracker.DAOs
             return rtn;
         }
 
-        public void AddProject(NewProjectViewModel newProject)
+        public void AddProject(ProjectViewModel newProject)
         {
             try
             {
@@ -81,5 +82,30 @@ namespace ProjectTracker.DAOs
                 Debug.WriteLine($"Exception: {e.Message}");
             }
         }
+
+        public void EditProject(ProjectViewModel editProject)
+        {
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                using SqlCommand command = new("EditProject", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue(nameof(editProject.Name), editProject.Name);
+                command.Parameters.AddWithValue(nameof(editProject.Status), editProject.Status);
+                command.Parameters.AddWithValue(nameof(editProject.Stage), editProject.Stage);
+                command.Parameters.AddWithValue(nameof(editProject.Comments), editProject.Comments);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Exception: {e.Message}");
+            }
+        }
+
     }
 }
