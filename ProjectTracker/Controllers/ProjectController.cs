@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ProjectTracker.DAOs;
+using ProjectTracker.Models.Project.Models;
 using ProjectTracker.Models.Project.ViewModels;
 
 namespace ProjectTracker.Controllers
@@ -19,22 +20,26 @@ namespace ProjectTracker.Controllers
             return View();
         }
 
-        public IActionResult NewProject()
+        public IActionResult LoadNewProject()
         {
             return PartialView("~/Views/Project/Partials/ProjectPartial.cshtml", new ProjectViewModel() { Mode = "add" });
         }
 
-        public void AddProject(ProjectViewModel newProject)
+        public IActionResult LoadEditProject(int projectId)
+        {
+            return PartialView("~/Views/Project/Partials/ProjectPartial.cshtml", new ProjectViewModel() { Mode = "edit" });
+        }
+
+        public void AddProject(ProjectModel newProject)
         {
             ProjectDAO dao = new(_configuration);
             dao.AddProject(newProject);
         }
 
-        public void EditProject(ProjectViewModel editProject)
+        public void EditProject(ProjectModel editProject)
         {
             ProjectDAO dao = new(_configuration);
             dao.AddProject(editProject);
         }
-
     }
 }
