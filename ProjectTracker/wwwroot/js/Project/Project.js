@@ -9,11 +9,16 @@ $('.editProjectBtn').click(function () {
 function loadProjectView(mode) {
     switch (mode) {
         case 'add':
-            $('#projectPartial').load('/Project/NewProject', function () {
-                submitProjectEvent()
+            $('#projectPartial').load('/Project/LoadNewProject', function () {
+                submitProjectEvent();
             });
             break;
         case 'edit':
+            let projectId = $(this).attr('projectId');
+
+            $('#projectPartial').load('/Project/LoadEditProject', projectId, function () {
+                submitProjectEvent();
+            });
             break;
     }
 }
@@ -24,7 +29,8 @@ function submitProjectEvent() {
 
         switch (mode) {
             case 'add':
-                let dataToSend = $('#newProjectForm :input').serialize();
+
+                let dataToSend = $('#projectForm :input').serialize();
 
                 $.post('/Project/AddProject', dataToSend, function () {
                     $('#projectPartial').empty();

@@ -1,8 +1,9 @@
-﻿@using ProjectTracker.Models.Project.ViewModels;
+﻿@using ProjectTracker.Models.Project.Models
+@using ProjectTracker.Models.Project.ViewModels;
 
 @model ProjectViewModel;
 
-<div id="newProjectForm">
+<div id="projectForm">
     <label for="name">Name:</label>
     @Html.TextBoxFor(m => m.Name, new { id = "name" })
 

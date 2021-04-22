@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using ProjectTracker.Models.Project.Models;
-using ProjectTracker.Models.Project.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,6 +17,13 @@ namespace ProjectTracker.DAOs
         {
             _configuration = configuration;
             _connectionString = _configuration.GetConnectionString("ProjectTrackerDb");
+        }
+
+        public ProjectModel GetProject(int id)
+        {
+            ProjectModel rtn = new();
+
+            return rtn;
         }
 
         public IEnumerable<ProjectModel> GetProjects()
@@ -51,15 +57,15 @@ namespace ProjectTracker.DAOs
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.WriteLine($"Exception: {e.Message}");
+                Debug.WriteLine($"Exception: {ex.Message}");
             }
 
             return rtn;
         }
 
-        public void AddProject(ProjectViewModel newProject)
+        public void AddProject(ProjectModel newProject)
         {
             try
             {
@@ -77,13 +83,13 @@ namespace ProjectTracker.DAOs
                 connection.Open();
                 command.ExecuteNonQuery();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.WriteLine($"Exception: {e.Message}");
+                Debug.WriteLine($"Exception: {ex.Message}");
             }
         }
 
-        public void EditProject(ProjectViewModel editProject)
+        public void EditProject(ProjectModel editProject)
         {
             try
             {
@@ -101,9 +107,9 @@ namespace ProjectTracker.DAOs
                 connection.Open();
                 command.ExecuteNonQuery();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.WriteLine($"Exception: {e.Message}");
+                Debug.WriteLine($"Exception: {ex.Message}");
             }
         }
 
