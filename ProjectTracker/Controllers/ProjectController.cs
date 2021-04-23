@@ -30,7 +30,7 @@ namespace ProjectTracker.Controllers
         public IActionResult LoadEditProject(int projectId)
         {
             ProjectModel project = dao.GetProject(projectId);
-            ProjectViewModel viewModel = project;
+            ProjectViewModel viewModel = project.ToProjectViewModel();
             viewModel.Mode = "edit"; 
 
             return PartialView("~/Views/Project/Partials/ProjectPartial.cshtml", viewModel);
