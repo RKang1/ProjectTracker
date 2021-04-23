@@ -9,8 +9,7 @@
     <ProjectGuid>{111ab9c8-204b-4caf-8568-a041063907f5}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
-    <RootPath>
-    </RootPath>
+    <RootPath />
     <RootNamespace>ProjectTrackerDb</RootNamespace>
     <AssemblyName>ProjectTrackerDb</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
@@ -48,7 +47,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
-    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
@@ -72,6 +70,8 @@
     <Build Include="dbo\StoredProcecdures\PostDeployment\PostDeployment.sql" />
     <Build Include="dbo\StoredProcecdures\PostDeployment\PopulateData\PopulateStages.sql" />
     <Build Include="dbo\StoredProcecdures\GetProjects.sql" />
+    <Build Include="dbo\StoredProcecdures\GetProjectById.sql" />
+    <Build Include="dbo\StoredProcecdures\EditProject.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare.scmp" />

@@ -1,12 +1,15 @@
-﻿$('#addProjectBtn').click(function () {
+﻿//TODO Create a function to async reload the projectPartial div on the dashboard
+
+$('#addProjectBtn').click(function () {
     loadProjectView('add')
 });
 
 $('.editProjectBtn').click(function () {
-    loadProjectView('edit');
+    let projectId = $(this).attr('projectId');
+    loadProjectView('edit', projectId);
 });
 
-function loadProjectView(mode) {
+function loadProjectView(mode, projectId) {
     switch (mode) {
         case 'add':
             $('#projectPartial').load('/Project/LoadNewProject', function () {
@@ -14,9 +17,7 @@ function loadProjectView(mode) {
             });
             break;
         case 'edit':
-            let projectId = $(this).attr('projectId');
-
-            $('#projectPartial').load('/Project/LoadEditProject', projectId, function () {
+            $('#projectPartial').load('/Project/LoadEditProject', { 'projectId': projectId }, function () {
                 submitProjectEvent();
             });
             break;
@@ -26,17 +27,18 @@ function loadProjectView(mode) {
 function submitProjectEvent() {
     $('#submitProjectBtn').click(function () {
         let mode = $('#submitProjectBtn').attr("mode");
+        let dataToSend = $('#projectForm :input').serialize();
 
         switch (mode) {
             case 'add':
-
-                let dataToSend = $('#projectForm :input').serialize();
-
                 $.post('/Project/AddProject', dataToSend, function () {
                     $('#projectPartial').empty();
                 });
                 break;
             case 'edit':
+                $.post('/Project/EditProject', dataToSend, function () {
+                    $('#projectPartial').empty();
+                });
                 break;
         }
     });
