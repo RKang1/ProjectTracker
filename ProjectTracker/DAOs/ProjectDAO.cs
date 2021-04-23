@@ -23,6 +23,36 @@ namespace ProjectTracker.DAOs
         {
             ProjectModel rtn = new();
 
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                using SqlCommand command = new("GetProjectById", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue(nameof(id), id);
+
+                connection.Open();
+                using SqlDataReader dataReader = command.ExecuteReader();
+                if(dataReader.Read())
+                {
+                    rtn = new ProjectModel()
+                    {
+                        Id = (int)dataReader[nameof(ProjectModel.Id)],
+                        Name = (string)dataReader[nameof(ProjectModel.Name)],
+                        Status = (int)dataReader[nameof(ProjectModel.Status)],
+                        Stage = (int)dataReader[nameof(ProjectModel.Stage)],
+                        Comments = (string)dataReader[nameof(ProjectModel.Comments)],
+                    };
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
+
             return rtn;
         }
 
@@ -89,7 +119,6 @@ namespace ProjectTracker.DAOs
             }
         }
 
-        //TODO write the stored proc for this
         public void EditProject(ProjectModel editProject)
         {
             try
@@ -100,6 +129,7 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
+                command.Parameters.AddWithValue(nameof(editProject.Id), editProject.Id);
                 command.Parameters.AddWithValue(nameof(editProject.Name), editProject.Name);
                 command.Parameters.AddWithValue(nameof(editProject.Status), editProject.Status);
                 command.Parameters.AddWithValue(nameof(editProject.Stage), editProject.Stage);
