@@ -23,7 +23,11 @@
                 <td>@project.Status</td>
                 <td>@project.Stage</td>
                 <td>@project.Comments</td>
-                <td><button projectId="@project.Id" class="editProjectBtn btn btn-secondary">edit</button></td>
+                <td>
+                    <button projectId="@project.Id" class="editProjectBtn btn btn-secondary">edit</button>
+                    <button projectId="@project.Id" class="deleteProjectBtn btn btn-secondary">delete</button>
+                </td>
+                <td></td>
             </tr>
         }
     </tbody>
@@ -36,5 +40,5 @@
 
 @section Scripts
 {
-    <script src="~/js/Project/Project.js"></script>
+<script src="~/js/Project/Project.js"></script>
 }

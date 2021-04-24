@@ -95,7 +95,7 @@ namespace ProjectTracker.DAOs
             return rtn;
         }
 
-        public void AddProject(ProjectModel newProject)
+        public void AddProject(ProjectModel project)
         {
             try
             {
@@ -105,10 +105,10 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(newProject.Name), newProject.Name);
-                command.Parameters.AddWithValue(nameof(newProject.Status), newProject.Status);
-                command.Parameters.AddWithValue(nameof(newProject.Stage), newProject.Stage);
-                command.Parameters.AddWithValue(nameof(newProject.Comments), newProject.Comments);
+                command.Parameters.AddWithValue(nameof(project.Name), project.Name);
+                command.Parameters.AddWithValue(nameof(project.Status), project.Status);
+                command.Parameters.AddWithValue(nameof(project.Stage), project.Stage);
+                command.Parameters.AddWithValue(nameof(project.Comments), project.Comments);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -119,7 +119,7 @@ namespace ProjectTracker.DAOs
             }
         }
 
-        public void EditProject(ProjectModel editProject)
+        public void EditProject(ProjectModel project)
         {
             try
             {
@@ -129,11 +129,11 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(editProject.Id), editProject.Id);
-                command.Parameters.AddWithValue(nameof(editProject.Name), editProject.Name);
-                command.Parameters.AddWithValue(nameof(editProject.Status), editProject.Status);
-                command.Parameters.AddWithValue(nameof(editProject.Stage), editProject.Stage);
-                command.Parameters.AddWithValue(nameof(editProject.Comments), editProject.Comments);
+                command.Parameters.AddWithValue(nameof(project.Id), project.Id);
+                command.Parameters.AddWithValue(nameof(project.Name), project.Name);
+                command.Parameters.AddWithValue(nameof(project.Status), project.Status);
+                command.Parameters.AddWithValue(nameof(project.Stage), project.Stage);
+                command.Parameters.AddWithValue(nameof(project.Comments), project.Comments);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -144,5 +144,25 @@ namespace ProjectTracker.DAOs
             }
         }
 
+        public void DeleteProject(ProjectModel project)
+        {
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                using SqlCommand command = new("DeleteProject", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue(nameof(project.Id), project.Id);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
+        }
     }
 }

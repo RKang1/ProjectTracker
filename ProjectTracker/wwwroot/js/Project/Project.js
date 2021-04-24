@@ -9,19 +9,20 @@ $('.editProjectBtn').click(function () {
     loadProjectView('edit', projectId);
 });
 
+$('.deleteProjectBtn').click(function () {
+    let projectId = $(this).attr('projectId');
+    loadProjectView('delete', projectId);
+});
+
 function loadProjectView(mode, projectId) {
-    switch (mode) {
-        case 'add':
-            $('#projectPartial').load('/Dashboard/LoadNewProject', function () {
-                submitProjectEvent();
-            });
-            break;
-        case 'edit':
-            $('#projectPartial').load('/Dashboard/LoadEditProject', { 'projectId': projectId }, function () {
-                submitProjectEvent();
-            });
-            break;
-    }
+    let dataToSend = {
+        'mode': mode,
+        'projectId': projectId
+    };
+
+    $('#projectPartial').load('/Dashboard/LoadProjectPartial', dataToSend, function () {
+        submitProjectEvent();
+    });
 }
 
 function submitProjectEvent() {

@@ -72,6 +72,7 @@
     <Build Include="dbo\StoredProcecdures\GetProjects.sql" />
     <Build Include="dbo\StoredProcecdures\GetProjectById.sql" />
     <Build Include="dbo\StoredProcecdures\EditProject.sql" />
+    <Build Include="dbo\StoredProcecdures\DeleteProject.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare.scmp" />
