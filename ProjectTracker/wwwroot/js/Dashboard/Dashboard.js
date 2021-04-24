@@ -1,4 +1,4 @@
-﻿//TODO Create a function to async reload the projectPartial div on the dashboard
+﻿//TODO Create a function to async reload the project table on the dashboard
 
 $('#addProjectBtn').click(function () {
     loadProjectView('add')
