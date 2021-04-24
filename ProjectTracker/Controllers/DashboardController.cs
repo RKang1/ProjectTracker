@@ -23,14 +23,13 @@ namespace ProjectTracker.Controllers
         {
             ViewData["Title"] = "Project Tracker";
 
-            DashboardViewModel model = new();
-            ProjectDAO projectDAO = new(_configuration);
+            return View();
+        }
 
-            IEnumerable<ProjectModel> projects = projectDAO.GetProjects();
-
-            model.Projects = projects;
-
-            return View(model);
+        public PartialViewResult LoadTablePartial()
+        {
+            IEnumerable<ProjectModel> projects = dao.GetProjects();
+            return PartialView("~/Views/Dashboard/Partials/TablePartial.cshtml", projects);
         }
 
         public PartialViewResult LoadProjectPartial(string mode, int projectId)
@@ -57,7 +56,7 @@ namespace ProjectTracker.Controllers
                     break;
             }
 
-            return PartialView("~/Views/Project/Partials/ProjectPartial.cshtml", viewModel);
+            return PartialView("~/Views/Dashboard/Partials/ProjectPartial.cshtml", viewModel);
         }
 
         [HttpPost]

@@ -2,36 +2,9 @@
 @using ProjectTracker.Models.Project.Models;
 @using ProjectTracker.Models.Project.ViewModels;
 
-@model DashboardViewModel;
-
 <h1>Dashboard</h1>
-<table class="table table-dark table-striped table-bordered table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Project</th>
-            <th scope="col">Status</th>
-            <th scope="col">Stage</th>
-            <th scope="col">Comments</th>
-        </tr>
-    </thead>
 
-    <tbody>
-        @foreach (ProjectModel project in Model.Projects)
-        {
-            <tr>
-                <td scope="row">@project.Name</td>
-                <td>@project.Status</td>
-                <td>@project.Stage</td>
-                <td>@project.Comments</td>
-                <td>
-                    <button projectId="@project.Id" class="editProjectBtn btn btn-secondary">edit</button>
-                    <button projectId="@project.Id" class="deleteProjectBtn btn btn-secondary">delete</button>
-                </td>
-                <td></td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div id="dashboardTablePartial"></div>
 
 <button type="button" class="btn btn-primary" id="addProjectBtn">Add Project</button>
 

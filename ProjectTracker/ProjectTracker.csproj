@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Project\Partials\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\js\Project\" />
     <Folder Include="wwwroot\lib\" />
