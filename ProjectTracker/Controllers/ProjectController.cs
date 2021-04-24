@@ -31,19 +31,22 @@ namespace ProjectTracker.Controllers
         {
             ProjectModel project = dao.GetProject(projectId);
             ProjectViewModel viewModel = project.ToProjectViewModel();
-            viewModel.Mode = "edit"; 
+            viewModel.Mode = "edit";
 
             return PartialView("~/Views/Project/Partials/ProjectPartial.cshtml", viewModel);
         }
 
-        public void AddProject(ProjectModel newProject)
+        public void SubmitProject(ProjectViewModel project)
         {
-            dao.AddProject(newProject);
-        }
-
-        public void EditProject(ProjectModel editProject)
-        {
-            dao.AddProject(editProject);
+            switch (project.Mode)
+            {
+                case "add":
+                    dao.AddProject(project.ToProjectModel());
+                    break;
+                case "edit":
+                    dao.EditProject(project.ToProjectModel());
+                    break;
+            }
         }
     }
 }
