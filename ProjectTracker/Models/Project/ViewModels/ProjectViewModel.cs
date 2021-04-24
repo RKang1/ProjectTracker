@@ -15,5 +15,17 @@ namespace ProjectTracker.Models.Project.ViewModels
         public string Comments { get; set; }
 
         public string Mode { get; set; }
+
+        public ProjectModel ToProjectModel()
+        {
+            return new ProjectModel()
+            {
+                Id = Id,
+                Name = Name,
+                Status = Status,
+                Stage = Stage,
+                Comments = Comments
+            };
+        }
     }
 }
