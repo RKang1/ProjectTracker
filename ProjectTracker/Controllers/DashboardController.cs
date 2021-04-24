@@ -16,7 +16,7 @@ namespace ProjectTracker.Controllers
             _configuration = configuration;
         }
 
-        public IActionResult Index()
+        public ViewResult Index()
         {
             ViewData["Title"] = "Project Tracker";
 

@@ -17,17 +17,17 @@ namespace ProjectTracker.Controllers
             dao = new(_configuration);
         }
 
-        public IActionResult Index()
+        public ViewResult Index()
         {
             return View();
         }
 
-        public IActionResult LoadNewProject()
+        public PartialViewResult LoadNewProject()
         {
             return PartialView("~/Views/Project/Partials/ProjectPartial.cshtml", new ProjectViewModel() { Mode = "add" });
         }
 
-        public IActionResult LoadEditProject(int projectId)
+        public PartialViewResult LoadEditProject(int projectId)
         {
             ProjectModel project = dao.GetProject(projectId);
             ProjectViewModel viewModel = project.ToProjectViewModel();
@@ -36,6 +36,7 @@ namespace ProjectTracker.Controllers
             return PartialView("~/Views/Project/Partials/ProjectPartial.cshtml", viewModel);
         }
 
+        [HttpPost]
         public void SubmitProject(ProjectViewModel project)
         {
             switch (project.Mode)
