@@ -12,12 +12,12 @@ $('.editProjectBtn').click(function () {
 function loadProjectView(mode, projectId) {
     switch (mode) {
         case 'add':
-            $('#projectPartial').load('/Project/LoadNewProject', function () {
+            $('#projectPartial').load('/Dashboard/LoadNewProject', function () {
                 submitProjectEvent();
             });
             break;
         case 'edit':
-            $('#projectPartial').load('/Project/LoadEditProject', { 'projectId': projectId }, function () {
+            $('#projectPartial').load('/Dashboard/LoadEditProject', { 'projectId': projectId }, function () {
                 submitProjectEvent();
             });
             break;
@@ -30,7 +30,7 @@ function submitProjectEvent() {
         let dataToSend = $('#projectForm :input').serializeArray();
         dataToSend.push({ name: 'mode', value: mode });
 
-        $.post('/Project/SubmitProject', dataToSend, function () {
+        $.post('/Dashboard/SubmitProject', dataToSend, function () {
             $('#projectPartial').empty();
         });
     });
