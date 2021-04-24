@@ -33,30 +33,46 @@ namespace ProjectTracker.Controllers
             return View(model);
         }
 
-        public PartialViewResult LoadNewProject()
+        public PartialViewResult LoadProjectPartial(string mode, int projectId)
         {
-            return PartialView("~/Views/Project/Partials/ProjectPartial.cshtml", new ProjectViewModel() { Mode = "add" });
-        }
+            ProjectModel project;
+            ProjectViewModel viewModel = new();
 
-        public PartialViewResult LoadEditProject(int projectId)
-        {
-            ProjectModel project = dao.GetProject(projectId);
-            ProjectViewModel viewModel = project.ToProjectViewModel();
-            viewModel.Mode = "edit";
+            switch (mode)
+            {
+                case "add":
+                    viewModel.Mode = "add";
+                    break;
+
+                case "edit":
+                    project = dao.GetProject(projectId);
+                    viewModel = project.ToProjectViewModel();
+                    viewModel.Mode = "edit";
+                    break;
+
+                case "delete":
+                    project = dao.GetProject(projectId);
+                    viewModel = project.ToProjectViewModel();
+                    viewModel.Mode = "delete";
+                    break;
+            }
 
             return PartialView("~/Views/Project/Partials/ProjectPartial.cshtml", viewModel);
         }
 
         [HttpPost]
-        public void SubmitProject(ProjectViewModel project)
+        public void SubmitProject(ProjectViewModel viewModel)
         {
-            switch (project.Mode)
+            switch (viewModel.Mode)
             {
                 case "add":
-                    dao.AddProject(project.ToProjectModel());
+                    dao.AddProject(viewModel.ToProjectModel());
                     break;
                 case "edit":
-                    dao.EditProject(project.ToProjectModel());
+                    dao.EditProject(viewModel.ToProjectModel());
+                    break;
+                case "delete":
+                    dao.DeleteProject(viewModel.ToProjectModel());
                     break;
             }
         }
