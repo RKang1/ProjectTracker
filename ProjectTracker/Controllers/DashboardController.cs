@@ -1,32 +1,80 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using ProjectTracker.DAOs;
 using ProjectTracker.Models.Dashboard.ViewModels;
 using ProjectTracker.Models.Project.Models;
+using ProjectTracker.Models.Project.ViewModels;
 using System.Collections.Generic;
 
 namespace ProjectTracker.Controllers
 {
     public class DashboardController : Controller
     {
-        public IActionResult Index()
+        private readonly IConfiguration _configuration;
+        private readonly ProjectDAO dao;
+
+        public DashboardController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            dao = new(_configuration);
+        }
+
+        public ViewResult Index()
         {
             ViewData["Title"] = "Project Tracker";
 
             DashboardViewModel model = new();
+            ProjectDAO projectDAO = new(_configuration);
 
-            List<ProjectModel> projects = new()
-            {
-                new ProjectModel()
-                {
-                    Name = "Project Test",
-                    Status = "Needs Work",
-                    Stage = "Alpha",
-                    Comments = "Reading works!"
-                }
-            };
+            IEnumerable<ProjectModel> projects = projectDAO.GetProjects();
 
             model.Projects = projects;
 
             return View(model);
+        }
+
+        public PartialViewResult LoadProjectPartial(string mode, int projectId)
+        {
+            ProjectModel project;
+            ProjectViewModel viewModel = new();
+
+            switch (mode)
+            {
+                case "add":
+                    viewModel.Mode = "add";
+                    break;
+
+                case "edit":
+                    project = dao.GetProject(projectId);
+                    viewModel = project.ToProjectViewModel();
+                    viewModel.Mode = "edit";
+                    break;
+
+                case "delete":
+                    project = dao.GetProject(projectId);
+                    viewModel = project.ToProjectViewModel();
+                    viewModel.Mode = "delete";
+                    break;
+            }
+
+            return PartialView("~/Views/Project/Partials/ProjectPartial.cshtml", viewModel);
+        }
+
+        [HttpPost]
+        public void SubmitProject(ProjectViewModel viewModel)
+        {
+            switch (viewModel.Mode)
+            {
+                case "add":
+                    dao.AddProject(viewModel.ToProjectModel());
+                    break;
+                case "edit":
+                    dao.EditProject(viewModel.ToProjectModel());
+                    break;
+                case "delete":
+                    dao.DeleteProject(viewModel.ToProjectModel());
+                    break;
+            }
         }
     }
 }

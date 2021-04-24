@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="7a699034-c3fb-4bf9-9e97-fb35600b00d0" ChangeDateTime="04/17/2021 20:49:18">
+    <Property Name="ElementName" Value="[dbo].[FK_Projects_Status_Projects]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Projects]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Projects_Status]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cafdbe96-7900-4de1-968e-14e188436318" ChangeDateTime="04/17/2021 20:51:18">
+    <Property Name="ElementName" Value="[dbo].[FK_Projects_Status]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Projects]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Projects_Statuses]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="817f9731-ebaf-48ca-8ef5-8f11e28405b2" ChangeDateTime="04/17/2021 20:51:19">
+    <Property Name="ElementName" Value="[dbo].[FK_Projects_Stage]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Projects]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Projects_Stages]" />
+  </Operation>
+</Operations>

@@ -23,16 +23,22 @@
                 <td>@project.Status</td>
                 <td>@project.Stage</td>
                 <td>@project.Comments</td>
+                <td>
+                    <button projectId="@project.Id" class="editProjectBtn btn btn-secondary">edit</button>
+                    <button projectId="@project.Id" class="deleteProjectBtn btn btn-secondary">delete</button>
+                </td>
+                <td></td>
             </tr>
         }
     </tbody>
 </table>
 
-<button type="button" class="btn btn-primary" id="displayAddProjectPartialBtn">Add Project</button>
+<button type="button" class="btn btn-primary" id="addProjectBtn">Add Project</button>
 
+@* This div should be used for add, edit, delete  *@
 <div id="projectPartial"></div>
 
 @section Scripts
 {
-    <script src="~/js/Project/AddProject.js"></script>
+<script src="~/js/Dashboard/Dashboard.js"></script>
 }

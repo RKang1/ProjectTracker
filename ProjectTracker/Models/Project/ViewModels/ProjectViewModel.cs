@@ -1,8 +1,8 @@
-﻿using ProjectTracker.Models.Project.ViewModels;
+﻿using ProjectTracker.Models.Project.Models;
 
-namespace ProjectTracker.Models.Project.Models
+namespace ProjectTracker.Models.Project.ViewModels
 {
-    public class ProjectModel
+    public class ProjectViewModel
     {
         public int Id { get; set; }
 
@@ -14,9 +14,11 @@ namespace ProjectTracker.Models.Project.Models
 
         public string Comments { get; set; }
 
-        public ProjectViewModel ToProjectViewModel()
+        public string Mode { get; set; }
+
+        public ProjectModel ToProjectModel()
         {
-            return new ProjectViewModel()
+            return new ProjectModel()
             {
                 Id = Id,
                 Name = Name,
