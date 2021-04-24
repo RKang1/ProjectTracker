@@ -1,20 +1,31 @@
 ﻿//TODO Create a function to async reload the project table on the dashboard
-
-$('#addProjectBtn').click(function () {
-    loadProjectView('add')
+$(document).ready(function () {
+    loadTablePartial();
 });
 
-$('.editProjectBtn').click(function () {
-    let projectId = $(this).attr('projectId');
-    loadProjectView('edit', projectId);
+$('#addProjectBtn').on('click', function () {
+    loadProjectPartial('add')
 });
 
-$('.deleteProjectBtn').click(function () {
-    let projectId = $(this).attr('projectId');
-    loadProjectView('delete', projectId);
-});
+function loadTablePartial() {
+    $('#dashboardTablePartial').load('Dashboard/LoadTablePartial', function () {
+        addTableEventHandlers();
+    });
+}
 
-function loadProjectView(mode, projectId) {
+function addTableEventHandlers() {
+    $('.editProjectBtn').on('click', function () {
+        let projectId = $(this).attr('projectId');
+        loadProjectPartial('edit', projectId);
+    });
+
+    $('.deleteProjectBtn').on('click', function () {
+        let projectId = $(this).attr('projectId');
+        loadProjectPartial('delete', projectId);
+    });
+}
+
+function loadProjectPartial(mode, projectId) {
     let dataToSend = {
         'mode': mode,
         'projectId': projectId
@@ -32,6 +43,7 @@ function submitProjectEvent() {
         dataToSend.push({ name: 'mode', value: mode });
 
         $.post('/Dashboard/SubmitProject', dataToSend, function () {
+            loadTablePartial();
             $('#projectPartial').empty();
         });
     });
