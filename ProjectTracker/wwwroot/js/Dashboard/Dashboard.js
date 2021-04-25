@@ -1,10 +1,5 @@
-﻿//TODO Create a function to async reload the project table on the dashboard
-$(document).ready(function () {
+﻿$(document).ready(function () {
     loadTablePartial();
-});
-
-$('#addProjectBtn').on('click', function () {
-    loadProjectPartial('add')
 });
 
 function loadTablePartial() {
@@ -13,14 +8,18 @@ function loadTablePartial() {
     });
 }
 
+$('#addProjectBtn').on('click', function () {
+    loadProjectPartial('add')
+});
+
 function addTableEventHandlers() {
     $('.editProjectBtn').on('click', function () {
-        let projectId = $(this).attr('projectId');
+        let projectId = $(this).closest('tr').find('.projectId').val();
         loadProjectPartial('edit', projectId);
     });
 
     $('.deleteProjectBtn').on('click', function () {
-        let projectId = $(this).attr('projectId');
+        let projectId = $(this).closest('tr').find('.projectId').val();
         loadProjectPartial('delete', projectId);
     });
 }
@@ -38,9 +37,7 @@ function loadProjectPartial(mode, projectId) {
 
 function submitProjectEvent() {
     $('#submitProjectBtn').click(function () {
-        let mode = $('#submitProjectBtn').attr('mode');
         let dataToSend = $('#projectForm :input').serializeArray();
-        dataToSend.push({ name: 'mode', value: mode });
 
         $.post('/Dashboard/SubmitProject', dataToSend, function () {
             loadTablePartial();

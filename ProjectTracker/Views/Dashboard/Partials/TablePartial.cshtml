@@ -16,15 +16,15 @@
         @foreach (ProjectModel project in Model)
         {
             <tr>
-                <td scope="row">@project.Name</td>
+                <td><a href="Project/?projectId=@project.Id">@project.Name</a></td>
                 <td>@project.Status</td>
                 <td>@project.Stage</td>
                 <td>@project.Comments</td>
                 <td>
-                    <button projectId="@project.Id" class="editProjectBtn btn btn-secondary">edit</button>
-                    <button projectId="@project.Id" class="deleteProjectBtn btn btn-secondary">delete</button>
+                    <button class="editProjectBtn btn btn-secondary">edit</button>
+                    <button class="deleteProjectBtn btn btn-secondary">delete</button>
                 </td>
-                <td></td>
+				@Html.HiddenFor(p => project.Id, new { @class = "projectId" })
             </tr>
         }
     </tbody>
