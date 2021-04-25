@@ -17,6 +17,7 @@
     @Html.TextBoxFor(m => m.Comments, new { id = "comments" })
 
     @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Mode)
 </div>
 
 <button type="button" class="btn btn-primary" id="submitProjectBtn" mode="@Model.Mode">Submit</button>
