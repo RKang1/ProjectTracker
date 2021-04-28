@@ -1,0 +1,29 @@
+﻿@using ProjectTracker.Models.Project.Models
+
+@model IEnumerable<TaskModel>
+
+<table class="table table-dark table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Description</th>
+            <th scope="col">Status</th>
+            <th scope="col">Comments</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (TaskModel task in Model)
+        {
+            <tr>
+                <td>@task.</td>
+                <td>@task.Description</td>
+                <td>@task.Comments</td>
+                <td>
+                    <button class="editProjectBtn btn btn-secondary">edit</button>
+                    <button class="deleteProjectBtn btn btn-secondary">delete</button>
+                </td>
+				@Html.HiddenFor(p => task.Id, new { @class = "taskId" })
+            </tr>
+        }
+    </tbody>
+</table>
