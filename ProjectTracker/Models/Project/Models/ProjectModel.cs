@@ -14,9 +14,9 @@ namespace ProjectTracker.Models.Project.Models
 
         public string Comments { get; set; }
 
-        public ProjectViewModel ToProjectViewModel()
+        public ModifyProjectViewModel ToProjectViewModel()
         {
-            return new ProjectViewModel()
+            return new ModifyProjectViewModel()
             {
                 Id = Id,
                 Name = Name,
