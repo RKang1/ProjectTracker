@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ProjectTracker.DAOs;
+using ProjectTracker.Models.Project.Models;
 using ProjectTracker.Models.Project.ViewModels;
+using System.Collections.Generic;
 
 namespace ProjectTracker.Controllers
 {
@@ -24,8 +26,15 @@ namespace ProjectTracker.Controllers
 
         public PartialViewResult LoadTaskTablePartial()
         {
-            //IEnumerable<ProjectModel> projects = dao.GetProjects();
-            return PartialView("~/Views/Project/Partials/TaskTablePartial.cshtml");
+            List<TaskModel> tasks = new();
+            tasks.Add(new TaskModel
+            {
+                Description = "Task 1",
+                Status = "In progress",
+                Comments = "Hooray"
+            });
+
+            return PartialView("~/Views/Project/Partials/TaskTablePartial.cshtml", tasks);
         }
     }
 }
