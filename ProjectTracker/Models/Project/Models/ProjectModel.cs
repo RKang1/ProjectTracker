@@ -14,7 +14,7 @@ namespace ProjectTracker.Models.Project.Models
 
         public string Comments { get; set; }
 
-        public ModifyProjectViewModel ToProjectViewModel()
+        public ModifyProjectViewModel ToModifyProjectViewModel()
         {
             return new ModifyProjectViewModel()
             {
@@ -25,5 +25,18 @@ namespace ProjectTracker.Models.Project.Models
                 Comments = Comments
             };
         }
+
+        public ProjectViewModel ToProjectViewModel()
+        {
+            return new ProjectViewModel()
+            {
+                Id = Id,
+                Name = Name,
+                Status = Status,
+                Stage = Stage,
+                Comments = Comments
+            };
+        }
+
     }
 }
