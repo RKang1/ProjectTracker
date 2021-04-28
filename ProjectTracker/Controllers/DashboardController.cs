@@ -35,7 +35,7 @@ namespace ProjectTracker.Controllers
         public PartialViewResult LoadProjectPartial(string mode, int projectId)
         {
             ProjectModel project;
-            ProjectViewModel viewModel = new();
+            ModifyProjectViewModel viewModel = new();
 
             switch (mode)
             {
@@ -60,7 +60,7 @@ namespace ProjectTracker.Controllers
         }
 
         [HttpPost]
-        public void SubmitProject(ProjectViewModel viewModel)
+        public void SubmitProject(ModifyProjectViewModel viewModel)
         {
             switch (viewModel.Mode)
             {
