@@ -44,14 +44,9 @@ namespace ProjectTracker.Controllers
                     break;
 
                 case "edit":
-                    project = dao.GetProject(projectId);
-                    viewModel = project.ToModifyProjectViewModel();
-                    viewModel.Mode = "edit";
-                    break;
-
                 case "delete":
                     viewModel = dao.GetProject(projectId).ToModifyProjectViewModel();
-                    viewModel.Mode = "delete";
+                    viewModel.Mode = mode;
                     break;
             }
 
