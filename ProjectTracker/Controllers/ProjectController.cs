@@ -36,5 +36,42 @@ namespace ProjectTracker.Controllers
 
             return PartialView("~/Views/Project/Partials/TaskTablePartial.cshtml", tasks);
         }
+
+        public PartialViewResult LoadTaskPartial(string mode, int taskId)
+        {
+            ModifyProjectViewModel viewModel = new();
+
+            switch (mode)
+            {
+                case "add":
+                    viewModel.Mode = "add";
+                    break;
+
+                case "edit":
+                case "delete":
+                    viewModel = dao.GetProject(taskId).ToModifyProjectViewModel();
+                    viewModel.Mode = mode;
+                    break;
+            }
+
+            return PartialView("~/Views/Dashboard/Partials/ProjectPartial.cshtml", viewModel);
+        }
+
+        [HttpPost]
+        public void SubmitTask(ModifyProjectViewModel viewModel)
+        {
+            switch (viewModel.Mode)
+            {
+                case "add":
+                    dao.AddProject(viewModel.ToProjectModel());
+                    break;
+                case "edit":
+                    dao.EditProject(viewModel.ToProjectModel());
+                    break;
+                case "delete":
+                    dao.DeleteProject(viewModel.ToProjectModel());
+                    break;
+            }
+        }
     }
 }
