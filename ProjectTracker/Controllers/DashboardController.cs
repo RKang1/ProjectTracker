@@ -34,13 +34,12 @@ namespace ProjectTracker.Controllers
 
         public PartialViewResult LoadProjectPartial(string mode, int projectId)
         {
-            ProjectModel project;
             ModifyProjectViewModel viewModel = new();
 
             switch (mode)
             {
                 case "add":
-                    viewModel.Mode = "add";
+                    viewModel.Mode = mode;
                     break;
 
                 case "edit":
