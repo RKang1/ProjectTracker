@@ -9,24 +9,25 @@ function loadTaskTablePartial() {
 }
 
 $('#addTaskBtn').on('click', function () {
-    loadTaskHelper('add');
+    loadTaskPartial('add');
 });
 
 function addTableEventHandlers() {
     $('.editTaskBtn').on('click', function () {
-        loadTaskHelper('edit');
+        loadTaskPartial('edit', $(this));
     });
 
     $('.deleteTaskBtn').on('click', function () {
-        loadTaskHelper('delete');
+        loadTaskPartial('delete', $(this));
     });
 }
 
-function loadTaskHelper(mode) {
+function loadTaskPartial(mode, context) {
     let taskId;
 
     if (mode === 'edit' || mode === 'delete') {
-        taskId = $(this).closest('tr').find('.taskId').val();
+        taskId = context.closest('tr').find('.taskId').val();
+        alert(taskId);
     }
 
     let dataToSend = {
@@ -35,17 +36,6 @@ function loadTaskHelper(mode) {
     };
 
     $('#taskPartial').load('LoadTaskPartial', dataToSend, function () {
-        submitTaskEvent();
-    });
-}
-
-function loadTaskPartial(mode, taskId) {
-    let dataToSend = {
-        'mode': mode,
-        'taskId': taskId
-    };
-
-    $('#taskPartial').load('/Project/LoadTaskPartial', dataToSend, function () {
         submitTaskEvent();
     });
 }
