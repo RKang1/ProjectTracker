@@ -29,6 +29,7 @@ namespace ProjectTracker.Controllers
             List<TaskModel> tasks = new();
             tasks.Add(new TaskModel
             {
+                Id = 1,
                 Description = "Task 1",
                 Status = "In progress",
                 Comments = "Hooray"
