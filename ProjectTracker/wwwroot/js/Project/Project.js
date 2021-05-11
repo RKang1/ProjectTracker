@@ -39,13 +39,13 @@ function loadTaskPartial(mode, context) {
     });
 }
 
-function submitProjectEvent() {
-    $('#submitProjectBtn').click(function () {
-        let dataToSend = $('#projectForm :input').serializeArray();
+function submitTaskEvent() {
+    $('#submitTaskBtn').click(function () {
+        let dataToSend = $('#taskForm :input').serializeArray();
 
-        $.post('/Project/SubmitProject', dataToSend, function () {
-            loadTablePartial();
-            $('#projectPartial').empty();
+        $.post('/Project/SubmitTask', dataToSend, function () {
+            loadTaskTablePartial();
+            $('#taskPartial').empty();
         });
     });
 }

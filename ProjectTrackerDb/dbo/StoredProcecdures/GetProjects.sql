@@ -1,4 +1,4 @@
 ﻿CREATE PROCEDURE [dbo].[GetProjects]
 AS
-	SELECT * FROM Projects;
+	SELECT [Id], [Name], [Status], [Stage], [Comments] FROM Projects;
 RETURN 0

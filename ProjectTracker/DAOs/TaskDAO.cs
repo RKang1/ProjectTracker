@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using ProjectTracker.Models.Project.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -52,6 +53,67 @@ namespace ProjectTracker.DAOs
             }
 
             return rtn;
+        }
+
+        public IEnumerable<TaskModel> GetTasks()
+        {
+            List<TaskModel> rtn = new();
+
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                using SqlCommand command = new("GetTasks", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                connection.Open();
+                using SqlDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        TaskModel temp = new TaskModel()
+                        {
+                            Id = (int)dataReader[nameof(TaskModel.Id)],
+                            Description = (string)dataReader[nameof(TaskModel.Description)],
+                            Status = (int)dataReader[nameof(TaskModel.Status)],
+                            Comments = (string)dataReader[nameof(TaskModel.Comments)],
+                        };
+
+                        rtn.Add(temp);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
+
+            return rtn;
+        }
+
+        public void AddTask(TaskModel task)
+        {
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                using SqlCommand command = new("AddTask", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue(nameof(task.Description), task.Description);
+                command.Parameters.AddWithValue(nameof(task.Status), task.Status);
+                command.Parameters.AddWithValue(nameof(task.Comments), task.Comments);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
         }
     }
 }
