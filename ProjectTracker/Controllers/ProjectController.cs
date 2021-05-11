@@ -28,15 +28,7 @@ namespace ProjectTracker.Controllers
 
         public PartialViewResult LoadTaskTablePartial()
         {
-            List<TaskModel> tasks = new();
-            tasks.Add(new TaskModel
-            {
-                Id = 1,
-                Description = "Task 1",
-                Status = 1,
-                Comments = "Hooray"
-            });
-
+            IEnumerable<TaskModel> tasks = taskDao.GetTasks();
             return PartialView("~/Views/Project/Partials/TaskTablePartial.cshtml", tasks);
         }
 
@@ -60,7 +52,7 @@ namespace ProjectTracker.Controllers
             switch (viewModel.Mode)
             {
                 case "add":
-                    //dao.AddProject(viewModel.ToTaskModel());
+                    taskDao.AddTask(viewModel.ToTaskModel());
                     break;
                 case "edit":
                     //dao.EditProject(viewModel.ToTaskModel());
