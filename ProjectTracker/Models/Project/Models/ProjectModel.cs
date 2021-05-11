@@ -1,4 +1,5 @@
-﻿using ProjectTracker.Models.Project.ViewModels;
+﻿using ProjectTracker.Models.Dashboard.ViewModels;
+using ProjectTracker.Models.Project.ViewModels;
 
 namespace ProjectTracker.Models.Project.Models
 {
