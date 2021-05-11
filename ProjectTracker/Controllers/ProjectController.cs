@@ -55,7 +55,7 @@ namespace ProjectTracker.Controllers
                     break;
             }
 
-            return PartialView("~/Views/Dashboard/Partials/ProjectPartial.cshtml", viewModel);
+            return PartialView("~/Views/Project/Partials/TaskPartial.cshtml", viewModel);
         }
 
         [HttpPost]
