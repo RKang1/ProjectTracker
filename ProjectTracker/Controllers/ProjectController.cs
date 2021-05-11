@@ -40,7 +40,7 @@ namespace ProjectTracker.Controllers
 
         public PartialViewResult LoadTaskPartial(string mode, int taskId)
         {
-            ModifyProjectViewModel viewModel = new();
+            ModifyTaskViewModel viewModel = new();
 
             switch (mode)
             {
@@ -50,27 +50,27 @@ namespace ProjectTracker.Controllers
 
                 case "edit":
                 case "delete":
-                    viewModel = dao.GetProject(taskId).ToModifyProjectViewModel();
+                    //viewModel = dao.GetProject(taskId).ToModifyProjectViewModel();
                     viewModel.Mode = mode;
                     break;
             }
 
-            return PartialView("~/Views/Project/Partials/TaskPartial.cshtml", viewModel);
+            return PartialView("~/Views/Project/Partials/ModifyTaskPartial.cshtml", viewModel);
         }
 
         [HttpPost]
-        public void SubmitTask(ModifyProjectViewModel viewModel)
+        public void SubmitTask(ModifyTaskViewModel viewModel)
         {
             switch (viewModel.Mode)
             {
                 case "add":
-                    dao.AddProject(viewModel.ToProjectModel());
+                    //dao.AddProject(viewModel.ToTaskModel());
                     break;
                 case "edit":
-                    dao.EditProject(viewModel.ToProjectModel());
+                    //dao.EditProject(viewModel.ToTaskModel());
                     break;
                 case "delete":
-                    dao.DeleteProject(viewModel.ToProjectModel());
+                    //dao.DeleteProject(viewModel.ToTaskModel());
                     break;
             }
         }
