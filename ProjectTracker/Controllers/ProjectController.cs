@@ -10,16 +10,18 @@ namespace ProjectTracker.Controllers
     public class ProjectController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ProjectDAO dao;
+        private readonly ProjectDAO projectDao;
+        private readonly TaskDAO taskDao;
 
         public ProjectController(IConfiguration configuration)
         {
             _configuration = configuration;
-            dao = new(_configuration);
+            projectDao = new(_configuration);
+            taskDao = new(_configuration);
         }
         public ViewResult Index(int projectId)
         {
-            ProjectViewModel viewModel = dao.GetProject(projectId).ToProjectViewModel();
+            ProjectViewModel viewModel = projectDao.GetProject(projectId).ToProjectViewModel();
 
             return View(viewModel);
         }
@@ -31,7 +33,7 @@ namespace ProjectTracker.Controllers
             {
                 Id = 1,
                 Description = "Task 1",
-                Status = "In progress",
+                Status = 1,
                 Comments = "Hooray"
             });
 
@@ -42,18 +44,12 @@ namespace ProjectTracker.Controllers
         {
             ModifyTaskViewModel viewModel = new();
 
-            switch (mode)
+            if(mode == "edit" || mode == "delete")
             {
-                case "add":
-                    viewModel.Mode = "add";
-                    break;
-
-                case "edit":
-                case "delete":
-                    //viewModel = dao.GetProject(taskId).ToModifyProjectViewModel();
-                    viewModel.Mode = mode;
-                    break;
+                viewModel = taskDao.GetTask(taskId).ToModifyTaskViewModel();
             }
+
+            viewModel.Mode = mode;
 
             return PartialView("~/Views/Project/Partials/ModifyTaskPartial.cshtml", viewModel);
         }

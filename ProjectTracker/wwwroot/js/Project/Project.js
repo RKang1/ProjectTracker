@@ -27,7 +27,6 @@ function loadTaskPartial(mode, context) {
 
     if (mode === 'edit' || mode === 'delete') {
         taskId = context.closest('tr').find('.taskId').val();
-        alert(taskId);
     }
 
     let dataToSend = {
