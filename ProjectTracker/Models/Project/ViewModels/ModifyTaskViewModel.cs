@@ -8,7 +8,7 @@ namespace ProjectTracker.Models.Project.ViewModels
 
         public string Description { get; set; }
 
-        public string Status { get; set; }
+        public int Status { get; set; }
 
         public string Comments { get; set; }
 
