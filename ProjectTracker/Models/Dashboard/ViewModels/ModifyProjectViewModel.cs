@@ -1,6 +1,6 @@
 ﻿using ProjectTracker.Models.Project.Models;
 
-namespace ProjectTracker.Models.Project.ViewModels
+namespace ProjectTracker.Models.Dashboard.ViewModels
 {
     public class ModifyProjectViewModel
     {
