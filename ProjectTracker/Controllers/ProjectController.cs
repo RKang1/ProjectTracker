@@ -19,6 +19,7 @@ namespace ProjectTracker.Controllers
             projectDao = new(_configuration);
             taskDao = new(_configuration);
         }
+
         public ViewResult Index(int projectId)
         {
             ProjectViewModel viewModel = projectDao.GetProject(projectId).ToProjectViewModel();
@@ -46,6 +47,24 @@ namespace ProjectTracker.Controllers
             return PartialView("~/Views/Project/Partials/ModifyTaskPartial.cshtml", viewModel);
         }
 
+        [HttpPost]
+        public void SubmitProject(ProjectViewModel viewModel)
+        {
+            switch (viewModel.Mode)
+            {
+                case "add":
+                    projectDao.AddProject(viewModel.ToProjectModel());
+                    break;
+                case "edit":
+                    projectDao.EditProject(viewModel.ToProjectModel());
+                    break;
+                case "delete":
+                    projectDao.DeleteProject(viewModel.ToProjectModel());
+                    break;
+            }
+        }
+
+        //TODO implement edit and delete tasks
         [HttpPost]
         public void SubmitTask(ModifyTaskViewModel viewModel)
         {
