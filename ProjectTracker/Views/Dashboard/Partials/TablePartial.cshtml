@@ -16,6 +16,7 @@
         @foreach (ProjectModel project in Model)
         {
             <tr>
+                @*TODO use Html.Actionlink() or Url.Action or some thing like that*@
                 <td><a href="Project/?projectId=@project.Id">@project.Name</a></td>
                 <td>@project.Status</td>
                 <td>@project.Stage</td>
@@ -24,7 +25,7 @@
                     <button class="editProjectBtn btn btn-secondary">edit</button>
                     <button class="deleteProjectBtn btn btn-secondary">delete</button>
                 </td>
-				@Html.HiddenFor(p => project.Id, new { @class = "projectId" })
+                @Html.HiddenFor(p => project.Id, new { @class = "projectId" })
             </tr>
         }
     </tbody>
