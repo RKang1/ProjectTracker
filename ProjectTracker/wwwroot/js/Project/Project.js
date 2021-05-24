@@ -12,6 +12,24 @@ $('#addTaskBtn').on('click', function () {
     loadTaskPartial('add');
 });
 
+$('#saveProjectBtn').on('click', function () {
+    //TODO Fix datatosend
+    let dataToSend = $('#taskForm :input').serializeArray();
+
+    $.post('/Project/SubmitProject', dataToSend, function () {
+        //TODO Reload the project data
+    });
+});
+
+$('#deleteProjectBtn').on('click', function () {
+    //TODO Fix datatosend
+    let dataToSend = $('#taskForm :input').serializeArray();
+
+    $.post('/Project/SubmitProject', dataToSend, function () {
+        //TODO Go back to the dashboard
+    });
+});
+
 function addTableEventHandlers() {
     $('.editTaskBtn').on('click', function () {
         loadTaskPartial('edit', $(this));

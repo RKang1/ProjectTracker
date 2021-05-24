@@ -15,6 +15,9 @@
     <label for="comments">Comments:</label>
     @Html.TextBoxFor(m => m.Comments, new { id = "comments" })
 
+	<button id="saveProjectBtn" class="btn btn-success">save</button>
+	<button id="deleteProjectBtn" class="btn btn-danger">delete</button>
+
     @Html.HiddenFor(m => m.Id)
 </div>
 
