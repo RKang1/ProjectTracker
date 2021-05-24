@@ -115,5 +115,50 @@ namespace ProjectTracker.DAOs
                 Debug.WriteLine($"Exception: {ex.Message}");
             }
         }
+
+        public void EditTask(TaskModel task)
+        {
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                using SqlCommand command = new("EditTask", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue(nameof(task.Id), task.Id);
+                command.Parameters.AddWithValue(nameof(task.Description), task.Description);
+                command.Parameters.AddWithValue(nameof(task.Status), task.Status);
+                command.Parameters.AddWithValue(nameof(task.Comments), task.Comments);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
+        }
+
+        public void DeleteTask(TaskModel task)
+        {
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                using SqlCommand command = new("DeleteTask", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue(nameof(task.Id), task.Id);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
+        }
     }
 }
