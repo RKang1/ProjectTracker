@@ -64,7 +64,6 @@ namespace ProjectTracker.Controllers
             }
         }
 
-        //TODO implement edit and delete tasks
         [HttpPost]
         public void SubmitTask(ModifyTaskViewModel viewModel)
         {
@@ -74,10 +73,10 @@ namespace ProjectTracker.Controllers
                     taskDao.AddTask(viewModel.ToTaskModel());
                     break;
                 case "edit":
-                    //dao.EditProject(viewModel.ToTaskModel());
+                    taskDao.EditTask(viewModel.ToTaskModel());
                     break;
                 case "delete":
-                    //dao.DeleteProject(viewModel.ToTaskModel());
+                    taskDao.DeleteTask(viewModel.ToTaskModel());
                     break;
             }
         }
