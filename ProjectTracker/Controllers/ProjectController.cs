@@ -29,7 +29,7 @@ namespace ProjectTracker.Controllers
 
         public PartialViewResult LoadTaskTablePartial()
         {
-            IEnumerable<TaskModel> tasks = taskDao.GetTasks();
+            IEnumerable<TaskModel> tasks = taskDao.GetAllTasks();
             return PartialView("~/Views/Project/Partials/TaskTablePartial.cshtml", tasks);
         }
 
@@ -39,7 +39,7 @@ namespace ProjectTracker.Controllers
 
             if(mode == "edit" || mode == "delete")
             {
-                viewModel = taskDao.GetTask(taskId).ToModifyTaskViewModel();
+                viewModel = taskDao.GetTaskById(taskId).ToModifyTaskViewModel();
             }
 
             viewModel.Mode = mode;
@@ -77,7 +77,7 @@ namespace ProjectTracker.Controllers
                     taskDao.EditTask(viewModel.ToTaskModel());
                     break;
                 case "delete":
-                    taskDao.DeleteTask(viewModel.ToTaskModel());
+                    taskDao.DeleteTaskById(viewModel.Id);
                     break;
             }
         }
