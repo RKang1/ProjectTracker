@@ -40,6 +40,7 @@ namespace ProjectTracker.DAOs
                     rtn = new TaskModel()
                     {
                         Id = (int)dataReader[nameof(TaskModel.Id)],
+                        ProjectId = (int)dataReader[nameof(TaskModel.ProjectId)],
                         Description = (string)dataReader[nameof(TaskModel.Description)],
                         Status = (int)dataReader[nameof(TaskModel.Status)],
                         Comments = (string)dataReader[nameof(TaskModel.Comments)],
@@ -76,6 +77,7 @@ namespace ProjectTracker.DAOs
                         TaskModel temp = new TaskModel()
                         {
                             Id = (int)dataReader[nameof(TaskModel.Id)],
+                            ProjectId = (int)dataReader[nameof(TaskModel.ProjectId)],
                             Description = (string)dataReader[nameof(TaskModel.Description)],
                             Status = (int)dataReader[nameof(TaskModel.Status)],
                             Comments = (string)dataReader[nameof(TaskModel.Comments)],
@@ -100,7 +102,8 @@ namespace ProjectTracker.DAOs
             try
             {
                 using SqlConnection connection = new(_connectionString);
-                using SqlCommand command = new("GetTasks", connection)
+                //TODO create this stored proc
+                using SqlCommand command = new("GetTasksByProjectId", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -114,6 +117,7 @@ namespace ProjectTracker.DAOs
                         TaskModel temp = new TaskModel()
                         {
                             Id = (int)dataReader[nameof(TaskModel.Id)],
+                            ProjectId = (int)dataReader[nameof(TaskModel.ProjectId)],
                             Description = (string)dataReader[nameof(TaskModel.Description)],
                             Status = (int)dataReader[nameof(TaskModel.Status)],
                             Comments = (string)dataReader[nameof(TaskModel.Comments)],
@@ -141,6 +145,7 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
+                command.Parameters.AddWithValue(nameof(task.ProjectId), task.ProjectId);
                 command.Parameters.AddWithValue(nameof(task.Description), task.Description);
                 command.Parameters.AddWithValue(nameof(task.Status), task.Status);
                 command.Parameters.AddWithValue(nameof(task.Comments), task.Comments);

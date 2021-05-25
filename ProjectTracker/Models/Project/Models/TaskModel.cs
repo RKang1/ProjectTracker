@@ -6,6 +6,8 @@ namespace ProjectTracker.Models.Project.Models
     {
         public int Id { get; set; }
 
+        public int ProjectId { get; set; }
+
         public string Description { get; set; }
 
         public int Status { get; set; }
@@ -17,6 +19,7 @@ namespace ProjectTracker.Models.Project.Models
             return new ModifyTaskViewModel()
             {
                 Id = Id,
+                ProjectId = ProjectId,
                 Description = Description,
                 Status = Status,
                 Comments = Comments
