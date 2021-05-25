@@ -13,20 +13,20 @@ $('#addTaskBtn').on('click', function () {
 });
 
 $('#saveProjectBtn').on('click', function () {
-    //TODO Fix datatosend
-    let dataToSend = $('#taskForm :input').serializeArray();
+    let dataToSend = $('#projectForm :input').serializeArray();
+    dataToSend.push({ name: "Mode", value: "edit" });
 
     $.post('/Project/SubmitProject', dataToSend, function () {
-        //TODO Reload the project data
+        location.reload();
     });
 });
 
 $('#deleteProjectBtn').on('click', function () {
-    //TODO Fix datatosend
-    let dataToSend = $('#taskForm :input').serializeArray();
+    let dataToSend = $('#projectForm :input').serializeArray();
+    dataToSend.push({ name: "Mode", value: "delete" });
 
     $.post('/Project/SubmitProject', dataToSend, function () {
-        //TODO Go back to the dashboard
+        window.location.href = "/";
     });
 });
 
