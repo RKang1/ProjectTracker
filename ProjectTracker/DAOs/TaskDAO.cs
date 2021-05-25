@@ -19,7 +19,7 @@ namespace ProjectTracker.DAOs
             _connectionString = _configuration.GetConnectionString("ProjectTrackerDb");
         }
 
-        public TaskModel GetTask(int id)
+        public TaskModel GetTaskById(int id)
         {
             TaskModel rtn = new();
 
@@ -55,7 +55,45 @@ namespace ProjectTracker.DAOs
             return rtn;
         }
 
-        public IEnumerable<TaskModel> GetTasks()
+        public IEnumerable<TaskModel> GetAllTasks()
+        {
+            List<TaskModel> rtn = new();
+
+            try
+            {
+                using SqlConnection connection = new(_connectionString);
+                using SqlCommand command = new("GetTasks", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                connection.Open();
+                using SqlDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        TaskModel temp = new TaskModel()
+                        {
+                            Id = (int)dataReader[nameof(TaskModel.Id)],
+                            Description = (string)dataReader[nameof(TaskModel.Description)],
+                            Status = (int)dataReader[nameof(TaskModel.Status)],
+                            Comments = (string)dataReader[nameof(TaskModel.Comments)],
+                        };
+
+                        rtn.Add(temp);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
+
+            return rtn;
+        }
+
+        public IEnumerable<TaskModel> GetTasksByProjectId()
         {
             List<TaskModel> rtn = new();
 
@@ -140,7 +178,7 @@ namespace ProjectTracker.DAOs
             }
         }
 
-        public void DeleteTask(TaskModel task)
+        public void DeleteTaskById(int id)
         {
             try
             {
@@ -150,7 +188,7 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(task.Id), task.Id);
+                command.Parameters.AddWithValue("Id", id);
 
                 connection.Open();
                 command.ExecuteNonQuery();
