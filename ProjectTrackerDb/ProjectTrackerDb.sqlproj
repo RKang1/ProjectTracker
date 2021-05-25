@@ -81,6 +81,7 @@
     <Build Include="dbo\StoredProcecdures\Task\GetTasks.sql" />
     <Build Include="dbo\StoredProcecdures\Task\EditTask.sql" />
     <Build Include="dbo\StoredProcecdures\Task\DeleteTask.sql" />
+    <Build Include="dbo\StoredProcecdures\Task\GetTasksByProjectId.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare.scmp" />
