@@ -6,6 +6,8 @@ namespace ProjectTracker.Models.Project.ViewModels
     {
         public int Id { get; set; }
 
+        public int ProjectId { get; set; }
+
         public string Description { get; set; }
 
         public int Status { get; set; }
@@ -19,6 +21,7 @@ namespace ProjectTracker.Models.Project.ViewModels
             return new TaskModel()
             {
                 Id = Id,
+                ProjectId = ProjectId,
                 Description = Description,
                 Status = Status,
                 Comments = Comments

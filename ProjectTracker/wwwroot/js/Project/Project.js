@@ -41,6 +41,8 @@ function addTableEventHandlers() {
 }
 
 function loadTaskPartial(mode, context) {
+    //TODO get the project id
+    let projectId = context.closest('table'.find('.projectId').val());
     let taskId;
 
     if (mode === 'edit' || mode === 'delete') {
@@ -48,16 +50,17 @@ function loadTaskPartial(mode, context) {
     }
 
     let dataToSend = {
+        'projectId': projectId,
         'mode': mode,
         'taskId': taskId
     };
 
     $('#taskPartial').load('LoadTaskPartial', dataToSend, function () {
-        submitTaskEvent();
+        addSubmitTaskEvent();
     });
 }
 
-function submitTaskEvent() {
+function addSubmitTaskEvent() {
     $('#submitTaskBtn').click(function () {
         let dataToSend = $('#taskForm :input').serializeArray();
 
