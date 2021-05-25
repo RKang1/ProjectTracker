@@ -95,18 +95,19 @@ namespace ProjectTracker.DAOs
             return rtn;
         }
 
-        public IEnumerable<TaskModel> GetTasksByProjectId()
+        public IEnumerable<TaskModel> GetTasksByProjectId(int projectId)
         {
             List<TaskModel> rtn = new();
 
             try
             {
                 using SqlConnection connection = new(_connectionString);
-                //TODO create this stored proc
                 using SqlCommand command = new("GetTasksByProjectId", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
+
+                command.Parameters.AddWithValue(nameof(projectId), projectId);
 
                 connection.Open();
                 using SqlDataReader dataReader = command.ExecuteReader();

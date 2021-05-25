@@ -27,13 +27,13 @@ namespace ProjectTracker.Controllers
             return View(viewModel);
         }
 
-        public PartialViewResult LoadTaskTablePartial()
+        public PartialViewResult LoadTaskTablePartial(int projectId)
         {
-            IEnumerable<TaskModel> tasks = taskDao.GetAllTasks();
+            IEnumerable<TaskModel> tasks = taskDao.GetTasksByProjectId(projectId);
             return PartialView("~/Views/Project/Partials/TaskTablePartial.cshtml", tasks);
         }
 
-        public PartialViewResult LoadTaskPartial(string mode, int taskId)
+        public PartialViewResult LoadTaskPartial(string mode, int taskId, int projectId)
         {
             ModifyTaskViewModel viewModel = new();
 
@@ -42,6 +42,7 @@ namespace ProjectTracker.Controllers
                 viewModel = taskDao.GetTaskById(taskId).ToModifyTaskViewModel();
             }
 
+            viewModel.ProjectId = projectId;
             viewModel.Mode = mode;
 
             return PartialView("~/Views/Project/Partials/ModifyTaskPartial.cshtml", viewModel);

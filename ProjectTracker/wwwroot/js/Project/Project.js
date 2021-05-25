@@ -3,7 +3,9 @@
 });
 
 function loadTaskTablePartial() {
-    $('#taskTablePartial').load('LoadTaskTablePartial', function () {
+    let projectId = $('#Id').val();
+
+    $('#taskTablePartial').load('LoadTaskTablePartial', { projectId: projectId }, function () {
         addTableEventHandlers();
     });
 }
@@ -41,8 +43,7 @@ function addTableEventHandlers() {
 }
 
 function loadTaskPartial(mode, context) {
-    //TODO get the project id
-    let projectId = context.closest('table'.find('.projectId').val());
+    let projectId = $('#Id').val();
     let taskId;
 
     if (mode === 'edit' || mode === 'delete') {
