@@ -52,6 +52,7 @@ namespace ProjectTracker.Controllers
         {
             switch (viewModel.Mode)
             {
+                //TODO create new project button
                 case "add":
                     projectDao.AddProject(viewModel.ToProjectModel());
                     break;
