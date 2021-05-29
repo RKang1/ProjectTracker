@@ -1,4 +1,5 @@
-﻿using ProjectTracker.Models.Project.ViewModels;
+﻿using ProjectTracker.Models.Dashboard.ViewModels;
+using ProjectTracker.Models.Project.ViewModels;
 
 namespace ProjectTracker.Models.Project.Models
 {
@@ -14,6 +15,18 @@ namespace ProjectTracker.Models.Project.Models
 
         public string Comments { get; set; }
 
+        public ModifyProjectViewModel ToModifyProjectViewModel()
+        {
+            return new ModifyProjectViewModel()
+            {
+                Id = Id,
+                Name = Name,
+                Status = Status,
+                Stage = Stage,
+                Comments = Comments
+            };
+        }
+
         public ProjectViewModel ToProjectViewModel()
         {
             return new ProjectViewModel()
@@ -25,5 +38,6 @@ namespace ProjectTracker.Models.Project.Models
                 Comments = Comments
             };
         }
+
     }
 }

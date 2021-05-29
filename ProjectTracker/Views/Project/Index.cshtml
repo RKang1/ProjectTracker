@@ -1,1 +1,35 @@
-﻿<h1>This is a project</h1>
+﻿@using ProjectTracker.Models.Project.ViewModels
+
+@model ProjectViewModel
+
+<div id="projectForm">
+    <label for="name">Name:</label>
+    @Html.TextBoxFor(m => m.Name, new { id = "name" })
+
+    <label for="status">Status:</label>
+    @Html.TextBoxFor(m => m.Status, new { id = "status" })
+
+    <label for="stage">Stage:</label>
+    @Html.TextBoxFor(m => m.Stage, new { id = "stage" })
+
+    <label for="comments">Comments:</label>
+    @Html.TextBoxFor(m => m.Comments, new { id = "comments" })
+
+	<button id="saveProjectBtn" class="btn btn-success">save</button>
+	<button id="deleteProjectBtn" class="btn btn-danger">delete</button>
+
+    @Html.HiddenFor(m => m.Id)
+</div>
+
+<h1>Tasks</h1>
+
+<div id="taskTablePartial"></div>
+
+<button type="button" class="btn btn-primary" id="addTaskBtn">Add Task</button>
+
+<div id="taskPartial"></div>
+
+@section Scripts
+{
+<script src="~/js/Project/Project.js"></script>
+}
