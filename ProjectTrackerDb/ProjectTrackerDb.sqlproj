@@ -60,19 +60,28 @@
     <Folder Include="dbo\Scripts" />
     <Folder Include="dbo\StoredProcecdures\PostDeployment" />
     <Folder Include="dbo\StoredProcecdures\PostDeployment\PopulateData" />
+    <Folder Include="dbo\StoredProcecdures\Project" />
+    <Folder Include="dbo\StoredProcecdures\Task" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Projects.sql" />
     <Build Include="dbo\Tables\Statuses.sql" />
     <Build Include="dbo\Tables\Stages.sql" />
-    <Build Include="dbo\StoredProcecdures\AddProject.sql" />
     <Build Include="dbo\StoredProcecdures\PostDeployment\PopulateData\PopulateStatuses.sql" />
     <Build Include="dbo\StoredProcecdures\PostDeployment\PostDeployment.sql" />
     <Build Include="dbo\StoredProcecdures\PostDeployment\PopulateData\PopulateStages.sql" />
-    <Build Include="dbo\StoredProcecdures\GetProjects.sql" />
-    <Build Include="dbo\StoredProcecdures\GetProjectById.sql" />
-    <Build Include="dbo\StoredProcecdures\EditProject.sql" />
-    <Build Include="dbo\StoredProcecdures\DeleteProject.sql" />
+    <Build Include="dbo\Tables\Tasks.sql" />
+    <Build Include="dbo\StoredProcecdures\Project\AddProject.sql" />
+    <Build Include="dbo\StoredProcecdures\Project\DeleteProject.sql" />
+    <Build Include="dbo\StoredProcecdures\Project\EditProject.sql" />
+    <Build Include="dbo\StoredProcecdures\Project\GetProjectById.sql" />
+    <Build Include="dbo\StoredProcecdures\Project\GetProjects.sql" />
+    <Build Include="dbo\StoredProcecdures\Task\AddTask.sql" />
+    <Build Include="dbo\StoredProcecdures\Task\GetTaskById.sql" />
+    <Build Include="dbo\StoredProcecdures\Task\GetTasks.sql" />
+    <Build Include="dbo\StoredProcecdures\Task\EditTask.sql" />
+    <Build Include="dbo\StoredProcecdures\Task\DeleteTask.sql" />
+    <Build Include="dbo\StoredProcecdures\Task\GetTasksByProjectId.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare.scmp" />

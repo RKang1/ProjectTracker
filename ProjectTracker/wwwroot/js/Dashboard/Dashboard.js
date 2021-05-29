@@ -9,22 +9,26 @@ function loadTablePartial() {
 }
 
 $('#addProjectBtn').on('click', function () {
-    loadProjectPartial('add')
+    loadProjectPartial('add');
 });
 
 function addTableEventHandlers() {
     $('.editProjectBtn').on('click', function () {
-        let projectId = $(this).closest('tr').find('.projectId').val();
-        loadProjectPartial('edit', projectId);
+        loadProjectPartial('edit', $(this));
     });
 
     $('.deleteProjectBtn').on('click', function () {
-        let projectId = $(this).closest('tr').find('.projectId').val();
-        loadProjectPartial('delete', projectId);
+        loadProjectPartial('delete', $(this));
     });
 }
 
-function loadProjectPartial(mode, projectId) {
+function loadProjectPartial(mode, context) {
+    let projectId;
+
+    if (mode === 'edit' || mode === 'delete') {
+        projectId = context.closest('tr').find('.projectId').val();
+    }
+
     let dataToSend = {
         'mode': mode,
         'projectId': projectId
