@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProjectTracker.Services;
 
 namespace ProjectTracker
 {
@@ -19,6 +20,19 @@ namespace ProjectTracker
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
+            string clientId = googleAuthNSection["ClientId"];
+            string clientSecret = googleAuthNSection["ClientSecret"];
+
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.ClientId = clientId;
+                    options.ClientSecret = clientSecret;
+                });
+
+            services.AddTransient<IGoogleService>(_ => new GoogleService(clientId));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
