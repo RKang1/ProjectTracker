@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore;
 using ProjectTracker.Services;
 
 namespace ProjectTracker
@@ -33,6 +34,8 @@ namespace ProjectTracker
                 });
 
             services.AddTransient<IGoogleService>(_ => new GoogleService(clientId));
+            services.AddRazorPages();
+            services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +44,7 @@ namespace ProjectTracker
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
@@ -60,7 +64,8 @@ namespace ProjectTracker
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Dashboard}/{action=Index}");
+                    pattern: "{controller=Dashboard}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
