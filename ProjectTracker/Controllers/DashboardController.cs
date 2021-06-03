@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ProjectTracker.DAOs;
 using ProjectTracker.Models.Dashboard.ViewModels;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 
 namespace ProjectTracker.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly IConfiguration _configuration;
