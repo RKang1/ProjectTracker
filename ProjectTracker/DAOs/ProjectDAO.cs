@@ -37,14 +37,7 @@ namespace ProjectTracker.DAOs
                 using SqlDataReader dataReader = command.ExecuteReader();
                 if(dataReader.Read())
                 {
-                    rtn = new ProjectModel()
-                    {
-                        Id = (int)dataReader[nameof(ProjectModel.Id)],
-                        Name = (string)dataReader[nameof(ProjectModel.Name)],
-                        Status = (int)dataReader[nameof(ProjectModel.Status)],
-                        Stage = (int)dataReader[nameof(ProjectModel.Stage)],
-                        Comments = (string)dataReader[nameof(ProjectModel.Comments)],
-                    };
+                    rtn = new ProjectModel(dataReader);
                 }
             }
 
@@ -74,16 +67,7 @@ namespace ProjectTracker.DAOs
                 {
                     while (dataReader.Read())
                     {
-                        ProjectModel temp = new ProjectModel()
-                        {
-                            Id = (int)dataReader[nameof(ProjectModel.Id)],
-                            Name = (string)dataReader[nameof(ProjectModel.Name)],
-                            Status = (int)dataReader[nameof(ProjectModel.Status)],
-                            Stage = (int)dataReader[nameof(ProjectModel.Stage)],
-                            Comments = (string)dataReader[nameof(ProjectModel.Comments)],
-                        };
-
-                        rtn.Add(temp);
+                        rtn.Add(new ProjectModel(dataReader));
                     }
                 }
             }
@@ -105,10 +89,11 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(project.Name), project.Name);
-                command.Parameters.AddWithValue(nameof(project.Status), project.Status);
-                command.Parameters.AddWithValue(nameof(project.Stage), project.Stage);
-                command.Parameters.AddWithValue(nameof(project.Comments), project.Comments);
+                command.Parameters.AddWithValue("UserId", project.UserId);
+                command.Parameters.AddWithValue("Name", project.Name);
+                command.Parameters.AddWithValue("Status", project.Status);
+                command.Parameters.AddWithValue("Stage", project.Stage);
+                command.Parameters.AddWithValue("Comments", project.Comments);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -129,11 +114,12 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(project.Id), project.Id);
-                command.Parameters.AddWithValue(nameof(project.Name), project.Name);
-                command.Parameters.AddWithValue(nameof(project.Status), project.Status);
-                command.Parameters.AddWithValue(nameof(project.Stage), project.Stage);
-                command.Parameters.AddWithValue(nameof(project.Comments), project.Comments);
+                command.Parameters.AddWithValue("Id", project.Id);
+                command.Parameters.AddWithValue("UserId", project.UserId);
+                command.Parameters.AddWithValue("Name", project.Name);
+                command.Parameters.AddWithValue("Status", project.Status);
+                command.Parameters.AddWithValue("Stage", project.Stage);
+                command.Parameters.AddWithValue("Comments", project.Comments);
 
                 connection.Open();
                 command.ExecuteNonQuery();
