@@ -63,6 +63,7 @@
     <Folder Include="dbo\StoredProcecdures\Project" />
     <Folder Include="dbo\StoredProcecdures\Task" />
     <Folder Include="dbo\Tables\EntityFramework" />
+    <Folder Include="dbo\StoredProcecdures\Development" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Projects.sql" />
