@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace ProjectTracker.Controllers
 {
+    // TODO modify stored procs, daos, and controllers for user id
     public class ProjectController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -53,8 +54,8 @@ namespace ProjectTracker.Controllers
         {
             switch (viewModel.Mode)
             {
-                //TODO create new project button
                 case "add":
+                    //TODO create new project button that uses this
                     projectDao.AddProject(viewModel.ToProjectModel());
                     break;
                 case "edit":
