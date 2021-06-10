@@ -34,6 +34,7 @@ namespace ProjectTracker.Models.Project.Models
             return new ModifyProjectViewModel()
             {
                 Id = Id,
+                UserId = UserId,
                 Name = Name,
                 Status = Status,
                 Stage = Stage,

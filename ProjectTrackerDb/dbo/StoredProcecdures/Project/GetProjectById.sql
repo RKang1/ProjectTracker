@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[GetProjectById]
-	@Id int
+	@Id INT
 AS
 	SELECT [Id], [Name], [Status], [Stage], [Comments]
 	FROM Projects

@@ -29,7 +29,7 @@ namespace ProjectTracker.Controllers
 
         public PartialViewResult LoadTablePartial()
         {
-            IEnumerable<ProjectModel> projects = projectDao.GetProjects();
+            IEnumerable<ProjectModel> projects = projectDao.GetProjects("0");
             return PartialView("~/Views/Dashboard/Partials/TablePartial.cshtml", projects);
         }
 
