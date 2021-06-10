@@ -49,17 +49,19 @@ namespace ProjectTracker.DAOs
             return rtn;
         }
 
-        public IEnumerable<ProjectModel> GetProjects()
+        public IEnumerable<ProjectModel> GetProjects(string userId)
         {
             List<ProjectModel> rtn = new();
 
             try
             {
                 using SqlConnection connection = new(_connectionString);
-                using SqlCommand command = new("GetProjects", connection)
+                using SqlCommand command = new("GetProjectsByUserId", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
+
+                command.Parameters.AddWithValue("UserId", userId);
 
                 connection.Open();
                 using SqlDataReader dataReader = command.ExecuteReader();
