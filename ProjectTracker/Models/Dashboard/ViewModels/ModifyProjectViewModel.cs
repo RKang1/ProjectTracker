@@ -23,7 +23,6 @@ namespace ProjectTracker.Models.Dashboard.ViewModels
             return new ProjectModel()
             {
                 Id = Id,
-                UserId = UserId,
                 Name = Name,
                 Status = Status,
                 Stage = Stage,
