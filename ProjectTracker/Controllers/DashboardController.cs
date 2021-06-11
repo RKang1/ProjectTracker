@@ -5,6 +5,7 @@ using ProjectTracker.DAOs;
 using ProjectTracker.Models.Dashboard.ViewModels;
 using ProjectTracker.Models.Project.Models;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace ProjectTracker.Controllers
 {
@@ -29,7 +30,9 @@ namespace ProjectTracker.Controllers
 
         public PartialViewResult LoadTablePartial()
         {
-            IEnumerable<ProjectModel> projects = projectDao.GetProjects("0");
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            IEnumerable<ProjectModel> projects = projectDao.GetProjects(userId);
             return PartialView("~/Views/Dashboard/Partials/TablePartial.cshtml", projects);
         }
 
