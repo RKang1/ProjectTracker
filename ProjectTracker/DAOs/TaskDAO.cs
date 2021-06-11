@@ -119,7 +119,6 @@ namespace ProjectTracker.DAOs
                         TaskModel temp = new TaskModel()
                         {
                             Id = (int)dataReader[nameof(TaskModel.Id)],
-                            UserId = (string)dataReader[nameof(TaskModel.UserId)],
                             ProjectId = (int)dataReader[nameof(TaskModel.ProjectId)],
                             Description = (string)dataReader[nameof(TaskModel.Description)],
                             Status = (int)dataReader[nameof(TaskModel.Status)],
@@ -138,7 +137,7 @@ namespace ProjectTracker.DAOs
             return rtn;
         }
 
-        public void AddTask(TaskModel task, string userId)
+        public void AddTask(TaskModel task)
         {
             try
             {
@@ -148,7 +147,6 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue("UserId", userId);
                 command.Parameters.AddWithValue(nameof(task.ProjectId), task.ProjectId);
                 command.Parameters.AddWithValue(nameof(task.Description), task.Description);
                 command.Parameters.AddWithValue(nameof(task.Status), task.Status);
