@@ -44,6 +44,7 @@ namespace ProjectTracker.Controllers
             return PartialView("~/Views/Project/Partials/TaskTablePartial.cshtml", tasks);
         }
 
+        // TODO this seems like it is vulnerable for loading tasks for a different project.
         public PartialViewResult LoadTaskPartial(string mode, int taskId, int projectId)
         {
             ModifyTaskViewModel viewModel = new();
