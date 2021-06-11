@@ -86,7 +86,7 @@ namespace ProjectTracker.Controllers
             {
                 case "add":
                     string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                    taskDao.AddTask(viewModel.ToTaskModel(), userId);
+                    taskDao.AddTask(viewModel.ToTaskModel());
                     break;
                 case "edit":
                     taskDao.EditTask(viewModel.ToTaskModel());
