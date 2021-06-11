@@ -4,6 +4,7 @@ using ProjectTracker.DAOs;
 using ProjectTracker.Models.Project.Models;
 using ProjectTracker.Models.Project.ViewModels;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace ProjectTracker.Controllers
 {
@@ -21,11 +22,20 @@ namespace ProjectTracker.Controllers
             taskDao = new(_configuration);
         }
 
-        public ViewResult Index(int projectId)
+        public ActionResult Index(int projectId)
         {
-            ProjectViewModel viewModel = projectDao.GetProject(projectId).ToProjectViewModel();
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ProjectModel project = projectDao.GetProject(projectId);
 
-            return View(viewModel);
+            ProjectViewModel viewModel = project.ToProjectViewModel();
+            if(project.UserId == userId)
+            {
+                return View(viewModel);
+            }
+            else
+            {
+                return Redirect("/Logout");
+            }
         }
 
         public PartialViewResult LoadTaskTablePartial(int projectId)
