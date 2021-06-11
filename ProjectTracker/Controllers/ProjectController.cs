@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace ProjectTracker.Controllers
 {
-    // TODO this needs to be secured so you can change the query string in the address bar to view other people's projects
+    //TODO Make edit and delete stored procs only modify projects according to user id
     public class ProjectController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -44,7 +44,6 @@ namespace ProjectTracker.Controllers
             return PartialView("~/Views/Project/Partials/TaskTablePartial.cshtml", tasks);
         }
 
-        // TODO this seems like it is vulnerable for loading tasks for a different project.
         public PartialViewResult LoadTaskPartial(string mode, int taskId, int projectId)
         {
             ModifyTaskViewModel viewModel = new();
@@ -53,6 +52,8 @@ namespace ProjectTracker.Controllers
             {
                 viewModel = taskDao.GetTaskById(taskId).ToModifyTaskViewModel();
             }
+
+            //TODO check that all the tasks belong to the user
 
             viewModel.ProjectId = projectId;
             viewModel.Mode = mode;
@@ -84,7 +85,8 @@ namespace ProjectTracker.Controllers
             switch (viewModel.Mode)
             {
                 case "add":
-                    taskDao.AddTask(viewModel.ToTaskModel());
+                    string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    taskDao.AddTask(viewModel.ToTaskModel(), userId);
                     break;
                 case "edit":
                     taskDao.EditTask(viewModel.ToTaskModel());
