@@ -81,7 +81,7 @@ namespace ProjectTracker.DAOs
             return rtn;
         }
 
-        public void AddProject(ProjectModel project)
+        public void AddProject(ProjectModel project, string userId)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue("UserId", project.UserId);
+                command.Parameters.AddWithValue("UserId", userId);
                 command.Parameters.AddWithValue("Name", project.Name);
                 command.Parameters.AddWithValue("Status", project.Status);
                 command.Parameters.AddWithValue("Stage", project.Stage);
@@ -117,7 +117,6 @@ namespace ProjectTracker.DAOs
                 };
 
                 command.Parameters.AddWithValue("Id", project.Id);
-                command.Parameters.AddWithValue("UserId", project.UserId);
                 command.Parameters.AddWithValue("Name", project.Name);
                 command.Parameters.AddWithValue("Status", project.Status);
                 command.Parameters.AddWithValue("Stage", project.Stage);

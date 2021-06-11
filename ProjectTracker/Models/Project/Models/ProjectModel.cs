@@ -19,8 +19,6 @@ namespace ProjectTracker.Models.Project.Models
 
         public int Id { get; set; }
 
-        public string UserId { get; set; }
-
         public string Name { get; set; }
 
         public int Status { get; set; }
@@ -34,7 +32,6 @@ namespace ProjectTracker.Models.Project.Models
             return new ModifyProjectViewModel()
             {
                 Id = Id,
-                UserId = UserId,
                 Name = Name,
                 Status = Status,
                 Stage = Stage,
