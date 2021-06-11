@@ -56,7 +56,7 @@ namespace ProjectTracker.Controllers
             {
                 case "add":
                     //TODO create new project button that uses this
-                    projectDao.AddProject(viewModel.ToProjectModel());
+                    //projectDao.AddProject(viewModel.ToProjectModel());
                     break;
                 case "edit":
                     projectDao.EditProject(viewModel.ToProjectModel());
