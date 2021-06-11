@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace ProjectTracker.Controllers
 {
-    // TODO modify stored procs, daos, and controllers for user id
+    // TODO this needs to be secured so you can change the query string in the address bar to view other people's projects
     public class ProjectController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -55,7 +55,7 @@ namespace ProjectTracker.Controllers
             switch (viewModel.Mode)
             {
                 case "add":
-                    //TODO create new project button that uses this
+                    //TODO create new project button on the Project page that uses this
                     //projectDao.AddProject(viewModel.ToProjectModel());
                     break;
                 case "edit":
