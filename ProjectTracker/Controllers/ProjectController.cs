@@ -41,7 +41,7 @@ namespace ProjectTracker.Controllers
         {
             ModifyTaskViewModel viewModel = new();
 
-            if(mode == "edit" || mode == "delete")
+            if (mode == "edit" || mode == "delete")
             {
                 string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 viewModel = taskDao.GetTaskById(taskId, userId).ToModifyTaskViewModel();
