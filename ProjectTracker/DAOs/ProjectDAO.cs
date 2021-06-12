@@ -36,7 +36,7 @@ namespace ProjectTracker.DAOs
 
                 connection.Open();
                 using SqlDataReader dataReader = command.ExecuteReader();
-                if(dataReader.Read())
+                if (dataReader.Read())
                 {
                     rtn = new ProjectModel(dataReader);
                 }
@@ -92,11 +92,11 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue("UserId", project.UserId);
                 command.Parameters.AddWithValue("Name", project.Name);
                 command.Parameters.AddWithValue("Status", project.Status);
                 command.Parameters.AddWithValue("Stage", project.Stage);
                 command.Parameters.AddWithValue("Comments", project.Comments);
+                command.Parameters.AddWithValue("UserId", project.UserId);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -118,11 +118,11 @@ namespace ProjectTracker.DAOs
                 };
 
                 command.Parameters.AddWithValue("Id", project.Id);
-                command.Parameters.AddWithValue("UserId", project.UserId);
                 command.Parameters.AddWithValue("Name", project.Name);
                 command.Parameters.AddWithValue("Status", project.Status);
                 command.Parameters.AddWithValue("Stage", project.Stage);
                 command.Parameters.AddWithValue("Comments", project.Comments);
+                command.Parameters.AddWithValue("UserId", project.UserId);
 
                 connection.Open();
                 command.ExecuteNonQuery();
