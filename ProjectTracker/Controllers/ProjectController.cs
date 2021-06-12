@@ -25,11 +25,11 @@ namespace ProjectTracker.Controllers
         public ActionResult Index(int projectId)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            ProjectModel project = projectDao.GetProject(projectId);
+            ProjectModel project = projectDao.GetProject(projectId, userId);
 
-            ProjectViewModel viewModel = project.ToProjectViewModel();
             if(project.UserId == userId)
             {
+                ProjectViewModel viewModel = project.ToProjectViewModel();
                 return View(viewModel);
             }
             else
@@ -64,6 +64,8 @@ namespace ProjectTracker.Controllers
         [HttpPost]
         public void SubmitProject(ProjectViewModel viewModel)
         {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             switch (viewModel.Mode)
             {
                 case "add":
@@ -71,10 +73,12 @@ namespace ProjectTracker.Controllers
                     //projectDao.AddProject(viewModel.ToProjectModel());
                     break;
                 case "edit":
-                    projectDao.EditProject(viewModel.ToProjectModel());
+                    ProjectModel project = viewModel.ToProjectModel();
+                    project.UserId = userId;
+                    projectDao.EditProject(project);
                     break;
                 case "delete":
-                    projectDao.DeleteProject(viewModel.ToProjectModel());
+                    projectDao.DeleteProject(viewModel.Id, userId);
                     break;
             }
         }

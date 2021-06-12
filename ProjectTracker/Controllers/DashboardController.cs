@@ -37,11 +37,12 @@ namespace ProjectTracker.Controllers
 
         public PartialViewResult LoadProjectPartial(string mode, int projectId)
         {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ModifyProjectViewModel viewModel = new();
 
             if (mode == "edit" || mode == "delete")
             {
-                viewModel = projectDao.GetProject(projectId).ToModifyProjectViewModel();
+                viewModel = projectDao.GetProject(projectId, userId).ToModifyProjectViewModel();
             }
 
             viewModel.Mode = mode;
@@ -52,17 +53,22 @@ namespace ProjectTracker.Controllers
         [HttpPost]
         public void SubmitProject(ModifyProjectViewModel viewModel)
         {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             switch (viewModel.Mode)
             {
                 case "add":
-                    string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                    projectDao.AddProject(viewModel.ToProjectModel(), userId);
+                    ProjectModel newProject = viewModel.ToProjectModel();
+                    newProject.UserId = userId;
+                    projectDao.AddProject(newProject);
                     break;
                 case "edit":
+                    ProjectModel project = viewModel.ToProjectModel();
+                    project.UserId = userId;
                     projectDao.EditProject(viewModel.ToProjectModel());
                     break;
                 case "delete":
-                    projectDao.DeleteProject(viewModel.ToProjectModel());
+                    projectDao.DeleteProject(viewModel.Id, userId);
                     break;
             }
         }
