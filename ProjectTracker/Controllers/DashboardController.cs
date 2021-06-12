@@ -58,14 +58,17 @@ namespace ProjectTracker.Controllers
             switch (viewModel.Mode)
             {
                 case "add":
-                    ProjectModel newProject = viewModel.ToProjectModel();
-                    newProject.UserId = userId;
-                    projectDao.AddProject(newProject);
-                    break;
                 case "edit":
                     ProjectModel project = viewModel.ToProjectModel();
                     project.UserId = userId;
-                    projectDao.EditProject(viewModel.ToProjectModel());
+                    if(viewModel.Mode == "add")
+                    {
+                        projectDao.AddProject(project);
+                    }
+                    else
+                    {
+                        projectDao.EditProject(viewModel.ToProjectModel());
+                    }
                     break;
                 case "delete":
                     projectDao.DeleteProject(viewModel.Id, userId);
