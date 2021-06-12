@@ -1,10 +1,7 @@
-﻿CREATE PROCEDURE [dbo].[GetProjectById]
-	@Id INT,
+CREATE PROCEDURE [dbo].[GetProjectsByUserId]
 	@UserId NVARCHAR (450)
-
 AS
 	SELECT [Id], [UserId], [Name], [Status], [Stage], [Comments]
 	FROM Projects
-	WHERE Id = @Id
-	AND UserId = @UserId;
+	WHERE [UserId] = @UserId;
 RETURN 0

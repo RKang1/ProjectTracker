@@ -19,7 +19,7 @@ namespace ProjectTracker.DAOs
             _connectionString = _configuration.GetConnectionString("ProjectTrackerDb");
         }
 
-        public ProjectModel GetProject(int id)
+        public ProjectModel GetProject(int id, string userId)
         {
             ProjectModel rtn = new();
 
@@ -31,20 +31,14 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(id), id);
+                command.Parameters.AddWithValue("Id", id);
+                command.Parameters.AddWithValue("UserId", userId);
 
                 connection.Open();
                 using SqlDataReader dataReader = command.ExecuteReader();
                 if(dataReader.Read())
                 {
-                    rtn = new ProjectModel()
-                    {
-                        Id = (int)dataReader[nameof(ProjectModel.Id)],
-                        Name = (string)dataReader[nameof(ProjectModel.Name)],
-                        Status = (int)dataReader[nameof(ProjectModel.Status)],
-                        Stage = (int)dataReader[nameof(ProjectModel.Stage)],
-                        Comments = (string)dataReader[nameof(ProjectModel.Comments)],
-                    };
+                    rtn = new ProjectModel(dataReader);
                 }
             }
 
@@ -56,17 +50,19 @@ namespace ProjectTracker.DAOs
             return rtn;
         }
 
-        public IEnumerable<ProjectModel> GetProjects()
+        public IEnumerable<ProjectModel> GetProjects(string userId)
         {
             List<ProjectModel> rtn = new();
 
             try
             {
                 using SqlConnection connection = new(_connectionString);
-                using SqlCommand command = new("GetProjects", connection)
+                using SqlCommand command = new("GetProjectsByUserId", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
+
+                command.Parameters.AddWithValue("UserId", userId);
 
                 connection.Open();
                 using SqlDataReader dataReader = command.ExecuteReader();
@@ -74,16 +70,7 @@ namespace ProjectTracker.DAOs
                 {
                     while (dataReader.Read())
                     {
-                        ProjectModel temp = new ProjectModel()
-                        {
-                            Id = (int)dataReader[nameof(ProjectModel.Id)],
-                            Name = (string)dataReader[nameof(ProjectModel.Name)],
-                            Status = (int)dataReader[nameof(ProjectModel.Status)],
-                            Stage = (int)dataReader[nameof(ProjectModel.Stage)],
-                            Comments = (string)dataReader[nameof(ProjectModel.Comments)],
-                        };
-
-                        rtn.Add(temp);
+                        rtn.Add(new ProjectModel(dataReader));
                     }
                 }
             }
@@ -105,10 +92,11 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(project.Name), project.Name);
-                command.Parameters.AddWithValue(nameof(project.Status), project.Status);
-                command.Parameters.AddWithValue(nameof(project.Stage), project.Stage);
-                command.Parameters.AddWithValue(nameof(project.Comments), project.Comments);
+                command.Parameters.AddWithValue("UserId", project.UserId);
+                command.Parameters.AddWithValue("Name", project.Name);
+                command.Parameters.AddWithValue("Status", project.Status);
+                command.Parameters.AddWithValue("Stage", project.Stage);
+                command.Parameters.AddWithValue("Comments", project.Comments);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -129,11 +117,12 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(project.Id), project.Id);
-                command.Parameters.AddWithValue(nameof(project.Name), project.Name);
-                command.Parameters.AddWithValue(nameof(project.Status), project.Status);
-                command.Parameters.AddWithValue(nameof(project.Stage), project.Stage);
-                command.Parameters.AddWithValue(nameof(project.Comments), project.Comments);
+                command.Parameters.AddWithValue("Id", project.Id);
+                command.Parameters.AddWithValue("UserId", project.UserId);
+                command.Parameters.AddWithValue("Name", project.Name);
+                command.Parameters.AddWithValue("Status", project.Status);
+                command.Parameters.AddWithValue("Stage", project.Stage);
+                command.Parameters.AddWithValue("Comments", project.Comments);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -144,7 +133,7 @@ namespace ProjectTracker.DAOs
             }
         }
 
-        public void DeleteProject(ProjectModel project)
+        public void DeleteProject(int id, string userId)
         {
             try
             {
@@ -154,7 +143,8 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(project.Id), project.Id);
+                command.Parameters.AddWithValue("Id", id);
+                command.Parameters.AddWithValue("UserId", userId);
 
                 connection.Open();
                 command.ExecuteNonQuery();

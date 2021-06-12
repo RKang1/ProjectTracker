@@ -5,6 +5,7 @@ using ProjectTracker.DAOs;
 using ProjectTracker.Models.Dashboard.ViewModels;
 using ProjectTracker.Models.Project.Models;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace ProjectTracker.Controllers
 {
@@ -29,17 +30,19 @@ namespace ProjectTracker.Controllers
 
         public PartialViewResult LoadTablePartial()
         {
-            IEnumerable<ProjectModel> projects = projectDao.GetProjects();
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            IEnumerable<ProjectModel> projects = projectDao.GetProjects(userId);
             return PartialView("~/Views/Dashboard/Partials/TablePartial.cshtml", projects);
         }
 
         public PartialViewResult LoadProjectPartial(string mode, int projectId)
         {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ModifyProjectViewModel viewModel = new();
 
-            if(mode == "edit" || mode == "delete")
+            if (mode == "edit" || mode == "delete")
             {
-                viewModel = projectDao.GetProject(projectId).ToModifyProjectViewModel();
+                viewModel = projectDao.GetProject(projectId, userId).ToModifyProjectViewModel();
             }
 
             viewModel.Mode = mode;
@@ -50,16 +53,22 @@ namespace ProjectTracker.Controllers
         [HttpPost]
         public void SubmitProject(ModifyProjectViewModel viewModel)
         {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             switch (viewModel.Mode)
             {
                 case "add":
-                    projectDao.AddProject(viewModel.ToProjectModel());
+                    ProjectModel newProject = viewModel.ToProjectModel();
+                    newProject.UserId = userId;
+                    projectDao.AddProject(newProject);
                     break;
                 case "edit":
+                    ProjectModel project = viewModel.ToProjectModel();
+                    project.UserId = userId;
                     projectDao.EditProject(viewModel.ToProjectModel());
                     break;
                 case "delete":
-                    projectDao.DeleteProject(viewModel.ToProjectModel());
+                    projectDao.DeleteProject(viewModel.Id, userId);
                     break;
             }
         }
