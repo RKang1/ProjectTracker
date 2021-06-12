@@ -61,7 +61,7 @@ namespace ProjectTracker.Controllers
                 case "edit":
                     ProjectModel project = viewModel.ToProjectModel();
                     project.UserId = userId;
-                    if(viewModel.Mode == "add")
+                    if (viewModel.Mode == "add")
                     {
                         projectDao.AddProject(project);
                     }
