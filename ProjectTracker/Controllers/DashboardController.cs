@@ -31,7 +31,7 @@ namespace ProjectTracker.Controllers
         public PartialViewResult LoadTablePartial()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            IEnumerable<ProjectModel> projects = projectDao.GetProjects(userId);
+            IEnumerable<ProjectModel> projects = projectDao.GetProjectsByUserId(userId);
             return PartialView("~/Views/Dashboard/Partials/TablePartial.cshtml", projects);
         }
 
@@ -42,7 +42,7 @@ namespace ProjectTracker.Controllers
 
             if (mode == "edit" || mode == "delete")
             {
-                viewModel = projectDao.GetProject(projectId, userId).ToModifyProjectViewModel();
+                viewModel = projectDao.GetProjectById(projectId, userId).ToModifyProjectViewModel();
             }
 
             viewModel.Mode = mode;
@@ -71,7 +71,7 @@ namespace ProjectTracker.Controllers
                     }
                     break;
                 case "delete":
-                    projectDao.DeleteProject(viewModel.Id, userId);
+                    projectDao.DeleteProjectById(viewModel.Id, userId);
                     break;
             }
         }

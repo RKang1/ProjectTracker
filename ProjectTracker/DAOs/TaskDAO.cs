@@ -13,7 +13,6 @@ namespace ProjectTracker.DAOs
         private readonly IConfiguration _configuration;
         private readonly string _connectionString;
 
-        //TODO refactor this so it's like the project dao
         public TaskDAO(IConfiguration configuration)
         {
             _configuration = configuration;
