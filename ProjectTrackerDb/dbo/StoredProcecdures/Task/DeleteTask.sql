@@ -1,6 +1,10 @@
 ﻿CREATE PROCEDURE [dbo].[DeleteTask]
-	@Id int
+	@Id INT,
+	@UserId NVARCHAR (450)
 AS
-	DELETE Tasks
-	WHERE Id = @Id;
+	DELETE t
+	FROM Tasks t
+	JOIN Projects p on p.Id = t.ProjectId
+	WHERE t.Id = @Id
+	AND p.UserId = @UserId;
 RETURN 0

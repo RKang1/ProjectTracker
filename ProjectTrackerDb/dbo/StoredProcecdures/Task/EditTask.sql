@@ -2,9 +2,13 @@
     @Id INT,
     @Description NVARCHAR, 
     @Status INT, 
-    @Comments NVARCHAR(1000) 
+    @Comments NVARCHAR(1000) ,
+	@UserId NVARCHAR (450)
 AS
-    UPDATE Tasks
+    UPDATE t
     SET [Description] = @Description, [Status] = @Status, [Comments] = @Comments
-    WHERE Id = @Id;
+    FROM Tasks t
+	JOIN Projects p on p.Id = t.ProjectId
+	WHERE t.Id = @Id
+	AND p.UserId = @UserId;
 RETURN 0

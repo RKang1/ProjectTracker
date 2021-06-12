@@ -1,10 +1,11 @@
 ﻿CREATE PROCEDURE [dbo].[AddProject]
-    @Name NVARCHAR, 
+	@UserId NVARCHAR (450),
+    @Name NVARCHAR(100), 
     @Status INT, 
     @Stage INT, 
     @Comments NVARCHAR(1000) 
 
 AS
-    INSERT INTO Projects ([Name], [Status], [Stage], [Comments])
-    VALUES (@Name, @Status, @Stage, @Comments)
+    INSERT INTO Projects ([UserId], [Name], [Status], [Stage], [Comments])
+    VALUES (@UserId, @Name, @Status, @Stage, @Comments)
 RETURN 0

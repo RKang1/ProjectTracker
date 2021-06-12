@@ -62,6 +62,8 @@
     <Folder Include="dbo\StoredProcecdures\PostDeployment\PopulateData" />
     <Folder Include="dbo\StoredProcecdures\Project" />
     <Folder Include="dbo\StoredProcecdures\Task" />
+    <Folder Include="dbo\Tables\EntityFramework" />
+    <Folder Include="dbo\StoredProcecdures\Development" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Projects.sql" />
@@ -75,13 +77,21 @@
     <Build Include="dbo\StoredProcecdures\Project\DeleteProject.sql" />
     <Build Include="dbo\StoredProcecdures\Project\EditProject.sql" />
     <Build Include="dbo\StoredProcecdures\Project\GetProjectById.sql" />
-    <Build Include="dbo\StoredProcecdures\Project\GetProjects.sql" />
+    <Build Include="dbo\StoredProcecdures\Project\GetProjectsByUserId.sql" />
     <Build Include="dbo\StoredProcecdures\Task\AddTask.sql" />
     <Build Include="dbo\StoredProcecdures\Task\GetTaskById.sql" />
-    <Build Include="dbo\StoredProcecdures\Task\GetTasks.sql" />
     <Build Include="dbo\StoredProcecdures\Task\EditTask.sql" />
     <Build Include="dbo\StoredProcecdures\Task\DeleteTask.sql" />
     <Build Include="dbo\StoredProcecdures\Task\GetTasksByProjectId.sql" />
+    <Build Include="dbo\Tables\EntityFramework\__EFMigrationsHistory.sql" />
+    <Build Include="dbo\Tables\EntityFramework\AspNetRoleClaims.sql" />
+    <Build Include="dbo\Tables\EntityFramework\AspNetRoles.sql" />
+    <Build Include="dbo\Tables\EntityFramework\AspNetUserClaims.sql" />
+    <Build Include="dbo\Tables\EntityFramework\AspNetUserLogins.sql" />
+    <Build Include="dbo\Tables\EntityFramework\AspNetUserRoles.sql" />
+    <Build Include="dbo\Tables\EntityFramework\AspNetUsers.sql" />
+    <Build Include="dbo\Tables\EntityFramework\AspNetUserTokens.sql" />
+    <Build Include="dbo\StoredProcecdures\Development\TruncateProjects.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare.scmp" />
