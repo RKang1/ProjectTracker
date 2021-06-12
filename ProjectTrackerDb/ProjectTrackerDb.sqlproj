@@ -80,7 +80,6 @@
     <Build Include="dbo\StoredProcecdures\Project\GetProjectsByUserId.sql" />
     <Build Include="dbo\StoredProcecdures\Task\AddTask.sql" />
     <Build Include="dbo\StoredProcecdures\Task\GetTaskById.sql" />
-    <Build Include="dbo\StoredProcecdures\Task\GetTasks.sql" />
     <Build Include="dbo\StoredProcecdures\Task\EditTask.sql" />
     <Build Include="dbo\StoredProcecdures\Task\DeleteTask.sql" />
     <Build Include="dbo\StoredProcecdures\Task\GetTasksByProjectId.sql" />
