@@ -38,14 +38,7 @@ namespace ProjectTracker.DAOs
                 using SqlDataReader dataReader = command.ExecuteReader();
                 if (dataReader.Read())
                 {
-                    rtn = new TaskModel()
-                    {
-                        Id = (int)dataReader[nameof(TaskModel.Id)],
-                        ProjectId = (int)dataReader[nameof(TaskModel.ProjectId)],
-                        Description = (string)dataReader[nameof(TaskModel.Description)],
-                        Status = (int)dataReader[nameof(TaskModel.Status)],
-                        Comments = (string)dataReader[nameof(TaskModel.Comments)],
-                    };
+                    rtn = new TaskModel(dataReader);
                 }
             }
 
@@ -78,16 +71,7 @@ namespace ProjectTracker.DAOs
                 {
                     while (dataReader.Read())
                     {
-                        TaskModel temp = new TaskModel()
-                        {
-                            Id = (int)dataReader[nameof(TaskModel.Id)],
-                            ProjectId = (int)dataReader[nameof(TaskModel.ProjectId)],
-                            Description = (string)dataReader[nameof(TaskModel.Description)],
-                            Status = (int)dataReader[nameof(TaskModel.Status)],
-                            Comments = (string)dataReader[nameof(TaskModel.Comments)],
-                        };
-
-                        rtn.Add(temp);
+                        rtn.Add(new TaskModel(dataReader));
                     }
                 }
             }
