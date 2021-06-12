@@ -19,7 +19,7 @@ namespace ProjectTracker.DAOs
             _connectionString = _configuration.GetConnectionString("ProjectTrackerDb");
         }
 
-        public ProjectModel GetProject(int id)
+        public ProjectModel GetProject(int id, string userId)
         {
             ProjectModel rtn = new();
 
@@ -31,7 +31,8 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(id), id);
+                command.Parameters.AddWithValue("Id", id);
+                command.Parameters.AddWithValue("UserId", userId);
 
                 connection.Open();
                 using SqlDataReader dataReader = command.ExecuteReader();
@@ -81,7 +82,7 @@ namespace ProjectTracker.DAOs
             return rtn;
         }
 
-        public void AddProject(ProjectModel project, string userId)
+        public void AddProject(ProjectModel project)
         {
             try
             {
@@ -91,7 +92,7 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue("UserId", userId);
+                command.Parameters.AddWithValue("UserId", project.UserId);
                 command.Parameters.AddWithValue("Name", project.Name);
                 command.Parameters.AddWithValue("Status", project.Status);
                 command.Parameters.AddWithValue("Stage", project.Stage);
@@ -117,6 +118,7 @@ namespace ProjectTracker.DAOs
                 };
 
                 command.Parameters.AddWithValue("Id", project.Id);
+                command.Parameters.AddWithValue("UserId", project.UserId);
                 command.Parameters.AddWithValue("Name", project.Name);
                 command.Parameters.AddWithValue("Status", project.Status);
                 command.Parameters.AddWithValue("Stage", project.Stage);
@@ -131,7 +133,7 @@ namespace ProjectTracker.DAOs
             }
         }
 
-        public void DeleteProject(ProjectModel project)
+        public void DeleteProject(int id, string userId)
         {
             try
             {
@@ -141,7 +143,8 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(project.Id), project.Id);
+                command.Parameters.AddWithValue("Id", id);
+                command.Parameters.AddWithValue("UserId", userId);
 
                 connection.Open();
                 command.ExecuteNonQuery();
