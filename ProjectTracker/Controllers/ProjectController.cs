@@ -40,7 +40,8 @@ namespace ProjectTracker.Controllers
 
         public PartialViewResult LoadTaskTablePartial(int projectId)
         {
-            IEnumerable<TaskModel> tasks = taskDao.GetTasksByProjectId(projectId);
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            IEnumerable<TaskModel> tasks = taskDao.GetTasksByProjectId(projectId, userId);
             return PartialView("~/Views/Project/Partials/TaskTablePartial.cshtml", tasks);
         }
 
@@ -50,10 +51,9 @@ namespace ProjectTracker.Controllers
 
             if(mode == "edit" || mode == "delete")
             {
-                viewModel = taskDao.GetTaskById(taskId).ToModifyTaskViewModel();
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                viewModel = taskDao.GetTaskById(taskId, userId).ToModifyTaskViewModel();
             }
-
-            //TODO check that all the tasks belong to the user
 
             viewModel.ProjectId = projectId;
             viewModel.Mode = mode;
@@ -86,17 +86,18 @@ namespace ProjectTracker.Controllers
         [HttpPost]
         public void SubmitTask(ModifyTaskViewModel viewModel)
         {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             switch (viewModel.Mode)
             {
                 case "add":
-                    string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                    taskDao.AddTask(viewModel.ToTaskModel());
+                    taskDao.AddTask(viewModel.ToTaskModel(), userId);
                     break;
                 case "edit":
-                    taskDao.EditTask(viewModel.ToTaskModel());
+                    taskDao.EditTask(viewModel.ToTaskModel(), userId);
                     break;
                 case "delete":
-                    taskDao.DeleteTaskById(viewModel.Id);
+                    taskDao.DeleteTaskById(viewModel.Id, userId);
                     break;
             }
         }

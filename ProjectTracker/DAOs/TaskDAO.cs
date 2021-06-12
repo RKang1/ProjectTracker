@@ -20,7 +20,7 @@ namespace ProjectTracker.DAOs
             _connectionString = _configuration.GetConnectionString("ProjectTrackerDb");
         }
 
-        public TaskModel GetTaskById(int id)
+        public TaskModel GetTaskById(int id, string userId)
         {
             TaskModel rtn = new();
 
@@ -32,7 +32,8 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(id), id);
+                command.Parameters.AddWithValue("Id", id);
+                command.Parameters.AddWithValue("UserId", userId);
 
                 connection.Open();
                 using SqlDataReader dataReader = command.ExecuteReader();
@@ -57,46 +58,7 @@ namespace ProjectTracker.DAOs
             return rtn;
         }
 
-        public IEnumerable<TaskModel> GetAllTasks()
-        {
-            List<TaskModel> rtn = new();
-
-            try
-            {
-                using SqlConnection connection = new(_connectionString);
-                using SqlCommand command = new("GetTasks", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                connection.Open();
-                using SqlDataReader dataReader = command.ExecuteReader();
-                if (dataReader.HasRows)
-                {
-                    while (dataReader.Read())
-                    {
-                        TaskModel temp = new TaskModel()
-                        {
-                            Id = (int)dataReader[nameof(TaskModel.Id)],
-                            ProjectId = (int)dataReader[nameof(TaskModel.ProjectId)],
-                            Description = (string)dataReader[nameof(TaskModel.Description)],
-                            Status = (int)dataReader[nameof(TaskModel.Status)],
-                            Comments = (string)dataReader[nameof(TaskModel.Comments)],
-                        };
-
-                        rtn.Add(temp);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Exception: {ex.Message}");
-            }
-
-            return rtn;
-        }
-
-        public IEnumerable<TaskModel> GetTasksByProjectId(int projectId)
+        public IEnumerable<TaskModel> GetTasksByProjectId(int projectId, string userId)
         {
             List<TaskModel> rtn = new();
 
@@ -108,7 +70,8 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(projectId), projectId);
+                command.Parameters.AddWithValue("ProjectId", projectId);
+                command.Parameters.AddWithValue("UserId", userId);
 
                 connection.Open();
                 using SqlDataReader dataReader = command.ExecuteReader();
@@ -137,7 +100,7 @@ namespace ProjectTracker.DAOs
             return rtn;
         }
 
-        public void AddTask(TaskModel task)
+        public void AddTask(TaskModel task, string userId)
         {
             try
             {
@@ -147,10 +110,11 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(task.ProjectId), task.ProjectId);
-                command.Parameters.AddWithValue(nameof(task.Description), task.Description);
-                command.Parameters.AddWithValue(nameof(task.Status), task.Status);
-                command.Parameters.AddWithValue(nameof(task.Comments), task.Comments);
+                command.Parameters.AddWithValue("ProjectId", task.ProjectId);
+                command.Parameters.AddWithValue("Description", task.Description);
+                command.Parameters.AddWithValue("Status", task.Status);
+                command.Parameters.AddWithValue("Comments", task.Comments);
+                command.Parameters.AddWithValue("UserId", userId);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -161,7 +125,7 @@ namespace ProjectTracker.DAOs
             }
         }
 
-        public void EditTask(TaskModel task)
+        public void EditTask(TaskModel task, string userId)
         {
             try
             {
@@ -171,10 +135,11 @@ namespace ProjectTracker.DAOs
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue(nameof(task.Id), task.Id);
-                command.Parameters.AddWithValue(nameof(task.Description), task.Description);
-                command.Parameters.AddWithValue(nameof(task.Status), task.Status);
-                command.Parameters.AddWithValue(nameof(task.Comments), task.Comments);
+                command.Parameters.AddWithValue("Id", task.Id);
+                command.Parameters.AddWithValue("Description", task.Description);
+                command.Parameters.AddWithValue("Status", task.Status);
+                command.Parameters.AddWithValue("Comments", task.Comments);
+                command.Parameters.AddWithValue("UserId", userId);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -185,7 +150,7 @@ namespace ProjectTracker.DAOs
             }
         }
 
-        public void DeleteTaskById(int id)
+        public void DeleteTaskById(int id, string userId)
         {
             try
             {
@@ -196,6 +161,7 @@ namespace ProjectTracker.DAOs
                 };
 
                 command.Parameters.AddWithValue("Id", id);
+                command.Parameters.AddWithValue("UserId", userId);
 
                 connection.Open();
                 command.ExecuteNonQuery();
