@@ -138,7 +138,7 @@ namespace ProjectTracker.DAOs
             try
             {
                 using SqlConnection connection = new(_connectionString);
-                using SqlCommand command = new("DeleteProject", connection)
+                using SqlCommand command = new("DeleteProjectById", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
