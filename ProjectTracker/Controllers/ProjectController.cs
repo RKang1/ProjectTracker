@@ -8,7 +8,6 @@ using System.Security.Claims;
 
 namespace ProjectTracker.Controllers
 {
-    //TODO Make edit and delete stored procs only modify projects according to user id
     public class ProjectController : Controller
     {
         private readonly IConfiguration _configuration;
@@ -27,15 +26,8 @@ namespace ProjectTracker.Controllers
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ProjectModel project = projectDao.GetProject(projectId, userId);
 
-            if(project.UserId == userId)
-            {
-                ProjectViewModel viewModel = project.ToProjectViewModel();
-                return View(viewModel);
-            }
-            else
-            {
-                return Redirect("/Logout");
-            }
+            ProjectViewModel viewModel = project.ToProjectViewModel();
+            return View(viewModel);
         }
 
         public PartialViewResult LoadTaskTablePartial(int projectId)
@@ -69,7 +61,7 @@ namespace ProjectTracker.Controllers
             switch (viewModel.Mode)
             {
                 case "add":
-                    //TODO create new project button on the Project page that uses this
+                    // Can be used later if needed
                     //projectDao.AddProject(viewModel.ToProjectModel());
                     break;
                 case "edit":
