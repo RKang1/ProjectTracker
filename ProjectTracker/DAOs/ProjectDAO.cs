@@ -19,7 +19,7 @@ namespace ProjectTracker.DAOs
             _connectionString = _configuration.GetConnectionString("ProjectTrackerDb");
         }
 
-        public ProjectModel GetProject(int id, string userId)
+        public ProjectModel GetProjectById(int id, string userId)
         {
             ProjectModel rtn = new();
 
@@ -50,7 +50,7 @@ namespace ProjectTracker.DAOs
             return rtn;
         }
 
-        public IEnumerable<ProjectModel> GetProjects(string userId)
+        public IEnumerable<ProjectModel> GetProjectsByUserId(string userId)
         {
             List<ProjectModel> rtn = new();
 
@@ -133,7 +133,7 @@ namespace ProjectTracker.DAOs
             }
         }
 
-        public void DeleteProject(int id, string userId)
+        public void DeleteProjectById(int id, string userId)
         {
             try
             {

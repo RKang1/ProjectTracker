@@ -24,7 +24,7 @@ namespace ProjectTracker.Controllers
         public ActionResult Index(int projectId)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            ProjectModel project = projectDao.GetProject(projectId, userId);
+            ProjectModel project = projectDao.GetProjectById(projectId, userId);
 
             ProjectViewModel viewModel = project.ToProjectViewModel();
             return View(viewModel);
@@ -70,7 +70,7 @@ namespace ProjectTracker.Controllers
                     projectDao.EditProject(project);
                     break;
                 case "delete":
-                    projectDao.DeleteProject(viewModel.Id, userId);
+                    projectDao.DeleteProjectById(viewModel.Id, userId);
                     break;
             }
         }
