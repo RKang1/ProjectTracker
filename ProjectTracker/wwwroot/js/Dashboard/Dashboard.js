@@ -1,20 +1,34 @@
-﻿//TODO Create a function to async reload the project table on the dashboard
-
-$('#addProjectBtn').click(function () {
-    loadProjectView('add')
+﻿$(document).ready(function () {
+    loadTablePartial();
 });
 
-$('.editProjectBtn').click(function () {
-    let projectId = $(this).attr('projectId');
-    loadProjectView('edit', projectId);
+function loadTablePartial() {
+    $('#dashboardTablePartial').load('Dashboard/LoadTablePartial', function () {
+        addTableEventHandlers();
+    });
+}
+
+$('#addProjectBtn').on('click', function () {
+    loadProjectPartial('add');
 });
 
-$('.deleteProjectBtn').click(function () {
-    let projectId = $(this).attr('projectId');
-    loadProjectView('delete', projectId);
-});
+function addTableEventHandlers() {
+    $('.editProjectBtn').on('click', function () {
+        loadProjectPartial('edit', $(this));
+    });
 
-function loadProjectView(mode, projectId) {
+    $('.deleteProjectBtn').on('click', function () {
+        loadProjectPartial('delete', $(this));
+    });
+}
+
+function loadProjectPartial(mode, context) {
+    let projectId;
+
+    if (mode === 'edit' || mode === 'delete') {
+        projectId = context.closest('tr').find('.projectId').val();
+    }
+
     let dataToSend = {
         'mode': mode,
         'projectId': projectId
@@ -27,11 +41,10 @@ function loadProjectView(mode, projectId) {
 
 function submitProjectEvent() {
     $('#submitProjectBtn').click(function () {
-        let mode = $('#submitProjectBtn').attr('mode');
         let dataToSend = $('#projectForm :input').serializeArray();
-        dataToSend.push({ name: 'mode', value: mode });
 
         $.post('/Dashboard/SubmitProject', dataToSend, function () {
+            loadTablePartial();
             $('#projectPartial').empty();
         });
     });

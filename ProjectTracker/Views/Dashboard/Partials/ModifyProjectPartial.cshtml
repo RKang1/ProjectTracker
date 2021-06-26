@@ -1,7 +1,6 @@
-﻿@using ProjectTracker.Models.Project.Models
-@using ProjectTracker.Models.Project.ViewModels;
+﻿@using ProjectTracker.Models.Dashboard.ViewModels
 
-@model ProjectViewModel;
+@model ModifyProjectViewModel;
 
 <div id="projectForm">
     <label for="name">Name:</label>
@@ -17,6 +16,8 @@
     @Html.TextBoxFor(m => m.Comments, new { id = "comments" })
 
     @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.UserId)
+    @Html.HiddenFor(m => m.Mode)
 </div>
 
 <button type="button" class="btn btn-primary" id="submitProjectBtn" mode="@Model.Mode">Submit</button>

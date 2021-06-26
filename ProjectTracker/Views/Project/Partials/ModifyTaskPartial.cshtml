@@ -1,0 +1,20 @@
+﻿@using ProjectTracker.Models.Project.ViewModels
+
+@model ModifyTaskViewModel;
+
+<div id="taskForm">
+    <label for="description">Description:</label>
+    @Html.TextBoxFor(m => m.Description, new { id = "description" })
+
+    <label for="status">Status:</label>
+    @Html.TextBoxFor(m => m.Status, new { id = "status" })
+
+    <label for="comments">Comments:</label>
+    @Html.TextBoxFor(m => m.Comments, new { id = "comments" })
+
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.ProjectId)
+    @Html.HiddenFor(m => m.Mode)
+</div>
+
+<button type="button" class="btn btn-primary" id="submitTaskBtn" mode="@Model.Mode">Submit</button>

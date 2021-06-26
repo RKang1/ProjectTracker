@@ -1,0 +1,32 @@
+﻿@using ProjectTracker.Models.Project.Models
+
+@model IEnumerable<ProjectModel>
+
+<table class="table table-dark table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Project</th>
+            <th scope="col">Status</th>
+            <th scope="col">Stage</th>
+            <th scope="col">Comments</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (ProjectModel project in Model)
+        {
+            <tr>
+                @*TODO use Html.Actionlink() or Url.Action or some thing like that*@
+                <td><a href="Project/?projectId=@project.Id">@project.Name</a></td>
+                <td>@project.Status</td>
+                <td>@project.Stage</td>
+                <td>@project.Comments</td>
+                <td>
+                    <button class="editProjectBtn btn btn-secondary">edit</button>
+                    <button class="deleteProjectBtn btn btn-secondary">delete</button>
+                </td>
+                @Html.HiddenFor(p => project.Id, new { @class = "projectId" })
+            </tr>
+        }
+    </tbody>
+</table>
