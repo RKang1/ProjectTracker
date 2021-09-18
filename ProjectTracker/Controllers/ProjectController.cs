@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using ProjectTracker.DAOs;
-using ProjectTracker.Models;
 using ProjectTracker.Models.Project.Models;
 using ProjectTracker.Models.Project.ViewModels;
 using System.Collections.Generic;
@@ -17,7 +16,6 @@ namespace ProjectTracker.Controllers
         private readonly TaskDAO taskDAO;
         private readonly StatusDAO statusDAO;
         private readonly StageDAO stageDAO;
-
 
         public ProjectController(IConfiguration configuration)
         {
