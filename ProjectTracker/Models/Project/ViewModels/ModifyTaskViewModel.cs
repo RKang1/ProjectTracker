@@ -1,4 +1,5 @@
-﻿using ProjectTracker.Models.Project.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using ProjectTracker.Models.Project.Models;
 
 namespace ProjectTracker.Models.Project.ViewModels
 {
@@ -10,7 +11,9 @@ namespace ProjectTracker.Models.Project.ViewModels
 
         public string Description { get; set; }
 
-        public int Status { get; set; }
+        public int SelectedStatus { get; set; }
+
+        public SelectList Statuses { get; set; }
 
         public string Comments { get; set; }
 
@@ -23,7 +26,7 @@ namespace ProjectTracker.Models.Project.ViewModels
                 Id = Id,
                 ProjectId = ProjectId,
                 Description = Description,
-                Status = Status,
+                Status = SelectedStatus,
                 Comments = Comments
             };
         }

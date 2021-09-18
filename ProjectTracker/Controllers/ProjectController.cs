@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using ProjectTracker.DAOs;
 using ProjectTracker.Models.Project.Models;
@@ -11,29 +12,42 @@ namespace ProjectTracker.Controllers
     public class ProjectController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ProjectDAO projectDao;
-        private readonly TaskDAO taskDao;
+        private readonly ProjectDAO projectDAO;
+        private readonly TaskDAO taskDAO;
+        private readonly StatusDAO statusDAO;
+        private readonly StageDAO stageDAO;
 
         public ProjectController(IConfiguration configuration)
         {
             _configuration = configuration;
-            projectDao = new(_configuration);
-            taskDao = new(_configuration);
+            projectDAO = new(_configuration);
+            taskDAO = new(_configuration);
+            statusDAO = new(_configuration);
+            stageDAO = new(_configuration);
         }
 
         public ActionResult Index(int projectId)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            ProjectModel project = projectDao.GetProjectById(projectId, userId);
+            ProjectModel project = projectDAO.GetProjectById(projectId, userId);
 
             ProjectViewModel viewModel = project.ToProjectViewModel();
+
+            var Statuses = statusDAO.GetStatuses();
+
+            viewModel.Statuses = new SelectList(Statuses, "Id", "Name");
+
+            var Stages = stageDAO.GetStages();
+
+            viewModel.Stages = new SelectList(Stages, "Id", "Name");
+
             return View(viewModel);
         }
 
         public PartialViewResult LoadTaskTablePartial(int projectId)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            IEnumerable<TaskModel> tasks = taskDao.GetTasksByProjectId(projectId, userId);
+            IEnumerable<TaskModel> tasks = taskDAO.GetTasksByProjectId(projectId, userId);
             return PartialView("~/Views/Project/Partials/TaskTablePartial.cshtml", tasks);
         }
 
@@ -44,11 +58,15 @@ namespace ProjectTracker.Controllers
             if (mode == "edit" || mode == "delete")
             {
                 string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                viewModel = taskDao.GetTaskById(taskId, userId).ToModifyTaskViewModel();
+                viewModel = taskDAO.GetTaskById(taskId, userId).ToModifyTaskViewModel();
             }
 
             viewModel.ProjectId = projectId;
             viewModel.Mode = mode;
+
+            var Statuses = statusDAO.GetStatuses();
+
+            viewModel.Statuses = new SelectList(Statuses, "Id", "Name");
 
             return PartialView("~/Views/Project/Partials/ModifyTaskPartial.cshtml", viewModel);
         }
@@ -67,10 +85,10 @@ namespace ProjectTracker.Controllers
                 case "edit":
                     ProjectModel project = viewModel.ToProjectModel();
                     project.UserId = userId;
-                    projectDao.EditProject(project);
+                    projectDAO.EditProject(project);
                     break;
                 case "delete":
-                    projectDao.DeleteProjectById(viewModel.Id, userId);
+                    projectDAO.DeleteProjectById(viewModel.Id, userId);
                     break;
             }
         }
@@ -83,13 +101,13 @@ namespace ProjectTracker.Controllers
             switch (viewModel.Mode)
             {
                 case "add":
-                    taskDao.AddTask(viewModel.ToTaskModel(), userId);
+                    taskDAO.AddTask(viewModel.ToTaskModel(), userId);
                     break;
                 case "edit":
-                    taskDao.EditTask(viewModel.ToTaskModel(), userId);
+                    taskDAO.EditTask(viewModel.ToTaskModel(), userId);
                     break;
                 case "delete":
-                    taskDao.DeleteTaskById(viewModel.Id, userId);
+                    taskDAO.DeleteTaskById(viewModel.Id, userId);
                     break;
             }
         }

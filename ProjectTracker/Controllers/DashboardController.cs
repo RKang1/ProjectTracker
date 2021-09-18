@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using ProjectTracker.DAOs;
+using ProjectTracker.Models;
 using ProjectTracker.Models.Dashboard.ViewModels;
 using ProjectTracker.Models.Project.Models;
 using System.Collections.Generic;
@@ -13,12 +15,16 @@ namespace ProjectTracker.Controllers
     public class DashboardController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ProjectDAO projectDao;
+        private readonly ProjectDAO projectDAO;
+        private readonly StatusDAO statusDAO;
+        private readonly StageDAO stageDAO;
 
         public DashboardController(IConfiguration configuration)
         {
             _configuration = configuration;
-            projectDao = new(_configuration);
+            projectDAO = new(_configuration);
+            statusDAO = new(_configuration);
+            stageDAO = new(_configuration);
         }
 
         public ViewResult Index()
@@ -31,7 +37,7 @@ namespace ProjectTracker.Controllers
         public PartialViewResult LoadTablePartial()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            IEnumerable<ProjectModel> projects = projectDao.GetProjectsByUserId(userId);
+            IEnumerable<ProjectModel> projects = projectDAO.GetProjectsByUserId(userId);
             return PartialView("~/Views/Dashboard/Partials/TablePartial.cshtml", projects);
         }
 
@@ -42,10 +48,18 @@ namespace ProjectTracker.Controllers
 
             if (mode == "edit" || mode == "delete")
             {
-                viewModel = projectDao.GetProjectById(projectId, userId).ToModifyProjectViewModel();
+                viewModel = projectDAO.GetProjectById(projectId, userId).ToModifyProjectViewModel();
             }
 
             viewModel.Mode = mode;
+
+            var Statuses = statusDAO.GetStatuses();
+
+            viewModel.Statuses = new SelectList(Statuses, "Id", "Name");
+
+            var Stages = stageDAO.GetStages();
+
+            viewModel.Stages = new SelectList(Stages, "Id", "Name");
 
             return PartialView("~/Views/Dashboard/Partials/ModifyProjectPartial.cshtml", viewModel);
         }
@@ -63,15 +77,15 @@ namespace ProjectTracker.Controllers
                     project.UserId = userId;
                     if (viewModel.Mode == "add")
                     {
-                        projectDao.AddProject(project);
+                        projectDAO.AddProject(project);
                     }
                     else
                     {
-                        projectDao.EditProject(viewModel.ToProjectModel());
+                        projectDAO.EditProject(viewModel.ToProjectModel());
                     }
                     break;
                 case "delete":
-                    projectDao.DeleteProjectById(viewModel.Id, userId);
+                    projectDAO.DeleteProjectById(viewModel.Id, userId);
                     break;
             }
         }
