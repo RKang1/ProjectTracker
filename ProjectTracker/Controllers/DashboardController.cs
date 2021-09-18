@@ -15,12 +15,16 @@ namespace ProjectTracker.Controllers
     public class DashboardController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ProjectDAO projectDao;
+        private readonly ProjectDAO projectDAO;
+        private readonly StatusDAO statusDAO;
+        private readonly StageDAO stageDAO;
 
         public DashboardController(IConfiguration configuration)
         {
             _configuration = configuration;
-            projectDao = new(_configuration);
+            projectDAO = new(_configuration);
+            statusDAO = new(_configuration);
+            stageDAO = new(_configuration);
         }
 
         public ViewResult Index()
@@ -33,7 +37,7 @@ namespace ProjectTracker.Controllers
         public PartialViewResult LoadTablePartial()
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            IEnumerable<ProjectModel> projects = projectDao.GetProjectsByUserId(userId);
+            IEnumerable<ProjectModel> projects = projectDAO.GetProjectsByUserId(userId);
             return PartialView("~/Views/Dashboard/Partials/TablePartial.cshtml", projects);
         }
 
@@ -44,24 +48,16 @@ namespace ProjectTracker.Controllers
 
             if (mode == "edit" || mode == "delete")
             {
-                viewModel = projectDao.GetProjectById(projectId, userId).ToModifyProjectViewModel();
+                viewModel = projectDAO.GetProjectById(projectId, userId).ToModifyProjectViewModel();
             }
 
             viewModel.Mode = mode;
 
-            List<StatusModel> Statuses = new List<StatusModel>
-            {
-                new StatusModel() { Id = 1, Name = "In Progress" },
-                new StatusModel() { Id = 2, Name = "Completed" },
-            };
+            var Statuses = statusDAO.GetStatuses();
 
             viewModel.Statuses = new SelectList(Statuses, "Id", "Name");
 
-            List<StageModel> Stages = new List<StageModel>
-            {
-                new StageModel() { Id = 1, Name = "Alpha" },
-                new StageModel() { Id = 2, Name = "Beta" },
-            };
+            var Stages = stageDAO.GetStages();
 
             viewModel.Stages = new SelectList(Stages, "Id", "Name");
 
@@ -81,15 +77,15 @@ namespace ProjectTracker.Controllers
                     project.UserId = userId;
                     if (viewModel.Mode == "add")
                     {
-                        projectDao.AddProject(project);
+                        projectDAO.AddProject(project);
                     }
                     else
                     {
-                        projectDao.EditProject(viewModel.ToProjectModel());
+                        projectDAO.EditProject(viewModel.ToProjectModel());
                     }
                     break;
                 case "delete":
-                    projectDao.DeleteProjectById(viewModel.Id, userId);
+                    projectDAO.DeleteProjectById(viewModel.Id, userId);
                     break;
             }
         }
