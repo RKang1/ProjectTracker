@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using ProjectTracker.DAOs;
+using ProjectTracker.Models;
 using ProjectTracker.Models.Project.Models;
 using ProjectTracker.Models.Project.ViewModels;
 using System.Collections.Generic;
@@ -27,6 +29,23 @@ namespace ProjectTracker.Controllers
             ProjectModel project = projectDao.GetProjectById(projectId, userId);
 
             ProjectViewModel viewModel = project.ToProjectViewModel();
+
+            List<StatusModel> Statuses = new List<StatusModel>
+            {
+                new StatusModel() { Id = 1, Name = "In Progress" },
+                new StatusModel() { Id = 2, Name = "Completed" },
+            };
+
+            viewModel.Statuses = new SelectList(Statuses, "Id", "Name");
+
+            List<StageModel> Stages = new List<StageModel>
+            {
+                new StageModel() { Id = 1, Name = "Alpha" },
+                new StageModel() { Id = 2, Name = "Beta" },
+            };
+
+            viewModel.Stages = new SelectList(Stages, "Id", "Name");
+
             return View(viewModel);
         }
 
@@ -49,6 +68,14 @@ namespace ProjectTracker.Controllers
 
             viewModel.ProjectId = projectId;
             viewModel.Mode = mode;
+
+            List<StatusModel> Statuses = new List<StatusModel>
+            {
+                new StatusModel() { Id = 1, Name = "In Progress" },
+                new StatusModel() { Id = 2, Name = "Completed" },
+            };
+
+            viewModel.Statuses = new SelectList(Statuses, "Id", "Name");
 
             return PartialView("~/Views/Project/Partials/ModifyTaskPartial.cshtml", viewModel);
         }
