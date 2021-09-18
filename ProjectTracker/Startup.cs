@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore;
 using ProjectTracker.Services;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace ProjectTracker
 {
@@ -22,9 +23,14 @@ namespace ProjectTracker
         {
             services.AddControllersWithViews();
 
-            IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
-            string clientId = googleAuthNSection["ClientId"];
-            string clientSecret = googleAuthNSection["ClientSecret"];
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
+
+            string clientId = Configuration["Authentication:Google:ClientId"];
+            string clientSecret = Configuration["Authentication:Google:ClientSecret"];
 
             services.AddAuthentication()
                 .AddGoogle(options =>
@@ -45,10 +51,12 @@ namespace ProjectTracker
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                app.UseForwardedHeaders();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseForwardedHeaders();
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 //https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-5.0&tabs=visual-studio
                 //app.UseHsts();
