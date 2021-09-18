@@ -21,38 +21,30 @@ namespace ProjectTracker.DAOs
 
         public IEnumerable<StageModel> GetStages()
         {
-            //List<StageModel> rtn = new();
+            List<StageModel> rtn = new();
 
-            //try
-            //{
-            //    using SqlConnection connection = new(_connectionString);
-            //    using SqlCommand command = new("GetProjectsByUserId", connection)
-            //    {
-            //        CommandType = CommandType.StoredProcedure
-            //    };
-
-            //    command.Parameters.AddWithValue("UserId", userId);
-
-            //    connection.Open();
-            //    using SqlDataReader dataReader = command.ExecuteReader();
-            //    if (dataReader.HasRows)
-            //    {
-            //        while (dataReader.Read())
-            //        {
-            //            rtn.Add(new StageModel(dataReader));
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.WriteLine($"Exception: {ex.Message}");
-            //}
-
-            List<StageModel> rtn = new List<StageModel>
+            try
             {
-                new StageModel() { Id = 1, Name = "Alpha" },
-                new StageModel() { Id = 2, Name = "Beta" },
-            };
+                using SqlConnection connection = new(_connectionString);
+                using SqlCommand command = new("GetStages", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                connection.Open();
+                using SqlDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        rtn.Add(new StageModel(dataReader));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
 
             return rtn;
         }

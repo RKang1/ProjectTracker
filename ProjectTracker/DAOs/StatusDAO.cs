@@ -1,6 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using ProjectTracker.Models;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace ProjectTracker.DAOs
 {
@@ -18,38 +22,30 @@ namespace ProjectTracker.DAOs
 
         public IEnumerable<StatusModel> GetStatuses()
         {
-            //List<StatusModel> rtn = new();
+            List<StatusModel> rtn = new();
 
-            //try
-            //{
-            //    using SqlConnection connection = new(_connectionString);
-            //    using SqlCommand command = new("GetProjectsByUserId", connection)
-            //    {
-            //        CommandType = CommandType.StoredProcedure
-            //    };
-
-            //    command.Parameters.AddWithValue("UserId", userId);
-
-            //    connection.Open();
-            //    using SqlDataReader dataReader = command.ExecuteReader();
-            //    if (dataReader.HasRows)
-            //    {
-            //        while (dataReader.Read())
-            //        {
-            //            rtn.Add(new StatusModel(dataReader));
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.WriteLine($"Exception: {ex.Message}");
-            //}
-
-            List<StatusModel> rtn = new List<StatusModel>
+            try
             {
-                new StatusModel() { Id = 1, Name = "In Progress" },
-                new StatusModel() { Id = 2, Name = "Completed" },
-            };
+                using SqlConnection connection = new(_connectionString);
+                using SqlCommand command = new("GetStatuses", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                connection.Open();
+                using SqlDataReader dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        rtn.Add(new StatusModel(dataReader));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception: {ex.Message}");
+            }
 
             return rtn;
         }
