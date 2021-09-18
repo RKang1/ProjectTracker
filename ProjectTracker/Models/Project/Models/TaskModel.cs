@@ -31,7 +31,7 @@ namespace ProjectTracker.Models.Project.Models
                 Id = Id,
                 ProjectId = ProjectId,
                 Description = Description,
-                Status = Status,
+                SelectedStatus = Status,
                 Comments = Comments
             };
         }

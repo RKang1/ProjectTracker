@@ -36,8 +36,8 @@ namespace ProjectTracker.Models.Project.Models
             {
                 Id = Id,
                 Name = Name,
-                Status = Status,
-                Stage = Stage,
+                SelectedStatus = Status,
+                SelectedStage = Stage,
                 Comments = Comments
             };
         }
@@ -48,8 +48,8 @@ namespace ProjectTracker.Models.Project.Models
             {
                 Id = Id,
                 Name = Name,
-                Status = Status,
-                Stage = Stage,
+                SelectedStatus = Status,
+                SelectedStage = Stage,
                 Comments = Comments
             };
         }
