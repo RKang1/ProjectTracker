@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using ProjectTracker.DAOs;
+using ProjectTracker.Models;
 using ProjectTracker.Models.Dashboard.ViewModels;
 using ProjectTracker.Models.Project.Models;
 using System.Collections.Generic;
@@ -46,6 +48,22 @@ namespace ProjectTracker.Controllers
             }
 
             viewModel.Mode = mode;
+
+            List<StatusModel> Statuses = new List<StatusModel>
+            {
+                new StatusModel() { Id = 1, Name = "In Progress" },
+                new StatusModel() { Id = 2, Name = "Completed" },
+            };
+
+            viewModel.Statuses = new SelectList(Statuses, "Id", "Name");
+
+            List<StageModel> Stages = new List<StageModel>
+            {
+                new StageModel() { Id = 1, Name = "Alpha" },
+                new StageModel() { Id = 2, Name = "Beta" },
+            };
+
+            viewModel.Stages = new SelectList(Stages, "Id", "Name");
 
             return PartialView("~/Views/Dashboard/Partials/ModifyProjectPartial.cshtml", viewModel);
         }
