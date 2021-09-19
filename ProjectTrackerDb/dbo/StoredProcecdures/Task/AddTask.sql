@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[AddTask]
     @ProjectId INT, 
-    @Description NVARCHAR, 
+    @Description NVARCHAR(250), 
     @Status INT, 
     @Comments NVARCHAR(1000),
 	@UserId NVARCHAR (450)
