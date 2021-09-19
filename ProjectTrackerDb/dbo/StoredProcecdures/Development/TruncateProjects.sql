@@ -9,7 +9,7 @@ AS
 	TRUNCATE TABLE [Projects];
 
 	ALTER TABLE [Tasks]
-	ADD CONSTRAINT [FK_Tasks_Statuses] FOREIGN KEY ([Status]) REFERENCES [Statuses]([Id]);
+	ADD CONSTRAINT [FK_Tasks_Statuses] FOREIGN KEY ([StatusId]) REFERENCES [Statuses]([Id]);
 
 	ALTER TABLE [Tasks]
 	ADD CONSTRAINT [FK_Tasks_Projects] FOREIGN KEY ([ProjectId]) REFERENCES [Projects]([Id]);
