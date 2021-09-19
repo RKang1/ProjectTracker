@@ -6,6 +6,6 @@
 	@UserId NVARCHAR (450)
 
 AS
-    INSERT INTO Projects ([UserId], [Name], [Status], [Stage], [Comments])
+    INSERT INTO Projects ([UserId], [Name], [StatusId], [StageId], [Comments])
     VALUES (@UserId, @Name, @Status, @Stage, @Comments)
 RETURN 0

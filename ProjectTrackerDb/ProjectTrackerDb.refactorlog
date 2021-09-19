@@ -21,4 +21,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="[FK_Projects_Stages]" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="6ee68ff6-b9a5-4281-a005-c8a2492827e7" ChangeDateTime="09/19/2021 01:41:21">
+    <Property Name="ElementName" Value="[dbo].[Projects].[Status]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Projects]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="StatusId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8d854317-a206-40d3-9b1d-2c50c072c7df" ChangeDateTime="09/19/2021 01:41:25">
+    <Property Name="ElementName" Value="[dbo].[Projects].[Stage]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Projects]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="StageId" />
+  </Operation>
 </Operations>
