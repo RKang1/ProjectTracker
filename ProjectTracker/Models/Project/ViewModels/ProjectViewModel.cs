@@ -27,8 +27,8 @@ namespace ProjectTracker.Models.Project.ViewModels
             {
                 Id = Id,
                 Name = Name,
-                Status = SelectedStatus,
-                Stage = SelectedStage,
+                StatusId = SelectedStatus,
+                StageId = SelectedStage,
                 Comments = Comments
             };
         }
