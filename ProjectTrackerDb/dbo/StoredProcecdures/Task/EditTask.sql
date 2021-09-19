@@ -6,7 +6,7 @@
 	@UserId NVARCHAR (450)
 AS
     UPDATE t
-    SET [Description] = @Description, [Status] = @Status, [Comments] = @Comments
+    SET [Description] = @Description, [StatusId] = @Status, [Comments] = @Comments
     FROM Tasks t
 	JOIN Projects p on p.Id = t.ProjectId
 	WHERE t.Id = @Id

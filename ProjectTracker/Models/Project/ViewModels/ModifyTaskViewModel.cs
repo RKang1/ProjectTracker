@@ -26,7 +26,7 @@ namespace ProjectTracker.Models.Project.ViewModels
                 Id = Id,
                 ProjectId = ProjectId,
                 Description = Description,
-                Status = SelectedStatus,
+                StatusId = SelectedStatus,
                 Comments = Comments
             };
         }

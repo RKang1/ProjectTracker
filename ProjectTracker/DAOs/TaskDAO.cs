@@ -95,7 +95,7 @@ namespace ProjectTracker.DAOs
 
                 command.Parameters.AddWithValue("ProjectId", task.ProjectId);
                 command.Parameters.AddWithValue("Description", task.Description);
-                command.Parameters.AddWithValue("Status", task.Status);
+                command.Parameters.AddWithValue("Status", task.StatusId);
                 command.Parameters.AddWithValue("Comments", task.Comments);
                 command.Parameters.AddWithValue("UserId", userId);
 
@@ -120,7 +120,7 @@ namespace ProjectTracker.DAOs
 
                 command.Parameters.AddWithValue("Id", task.Id);
                 command.Parameters.AddWithValue("Description", task.Description);
-                command.Parameters.AddWithValue("Status", task.Status);
+                command.Parameters.AddWithValue("Status", task.StatusId);
                 command.Parameters.AddWithValue("Comments", task.Comments);
                 command.Parameters.AddWithValue("UserId", userId);
 
