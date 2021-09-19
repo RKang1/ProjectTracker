@@ -1,4 +1,5 @@
-﻿using ProjectTracker.Models.Project.ViewModels;
+﻿using ProjectTracker.Helpers;
+using ProjectTracker.Models.Project.ViewModels;
 using System.Data.SqlClient;
 
 namespace ProjectTracker.Models.Project.Models
@@ -11,7 +12,7 @@ namespace ProjectTracker.Models.Project.Models
             Id = (int)sqlDataReader["Id"];
             Description = (string)sqlDataReader["Description"];
             Status = (int)sqlDataReader["Status"];
-            Comments = (string)sqlDataReader["Comments"];
+            Comments = DatabaseHelper.ConvertFromDBVal<string>(sqlDataReader["Comments"]);
         }
 
         public int Id { get; set; }

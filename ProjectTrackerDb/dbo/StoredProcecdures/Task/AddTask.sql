@@ -2,7 +2,7 @@
     @ProjectId INT, 
     @Description NVARCHAR(250), 
     @Status INT, 
-    @Comments NVARCHAR(1000),
+    @Comments NVARCHAR(1000) = NULL,
 	@UserId NVARCHAR (450)
 AS
     INSERT INTO Tasks ([ProjectId], [Description], [Status], [Comments])
