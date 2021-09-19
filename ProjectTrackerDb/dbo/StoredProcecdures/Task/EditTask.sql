@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[EditTask]
     @Id INT,
-    @Description NVARCHAR, 
+    @Description NVARCHAR(250), 
     @Status INT, 
-    @Comments NVARCHAR(1000) ,
+    @Comments NVARCHAR(1000) = NULL,
 	@UserId NVARCHAR (450)
 AS
     UPDATE t
