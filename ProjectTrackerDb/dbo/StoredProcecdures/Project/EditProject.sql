@@ -8,7 +8,7 @@
 
 AS
     UPDATE Projects
-    SET [Name] = @Name, [Status] = @Status, [Stage] = @Stage, [Comments] = @Comments
+    SET [Name] = @Name, [StatusId] = @Status, [StageId] = @Stage, [Comments] = @Comments
 	WHERE Id = @Id
 	AND UserId = @UserId;
 RETURN 0

@@ -11,7 +11,8 @@ namespace ProjectTracker.Models.Project.Models
         {
             Id = (int)sqlDataReader["Id"];
             Description = (string)sqlDataReader["Description"];
-            Status = (int)sqlDataReader["Status"];
+            StatusId = (int)sqlDataReader["StatusId"];
+            Status = (string)sqlDataReader["Status"];
             Comments = DatabaseHelper.ConvertFromDBVal<string>(sqlDataReader["Comments"]);
         }
 
@@ -21,7 +22,9 @@ namespace ProjectTracker.Models.Project.Models
 
         public string Description { get; set; }
 
-        public int Status { get; set; }
+        public int StatusId { get; set; }
+
+        public string Status { get; set; }
 
         public string Comments { get; set; }
 
@@ -32,7 +35,7 @@ namespace ProjectTracker.Models.Project.Models
                 Id = Id,
                 ProjectId = ProjectId,
                 Description = Description,
-                SelectedStatus = Status,
+                SelectedStatus = StatusId,
                 Comments = Comments
             };
         }

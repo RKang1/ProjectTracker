@@ -5,7 +5,7 @@
     @Comments NVARCHAR(1000) = NULL,
 	@UserId NVARCHAR (450)
 AS
-    INSERT INTO Tasks ([ProjectId], [Description], [Status], [Comments])
+    INSERT INTO Tasks ([ProjectId], [Description], [StatusId], [Comments])
     SELECT @ProjectId, @Description, @Status, @Comments
     FROM Projects
     WHERE Id = @ProjectId
